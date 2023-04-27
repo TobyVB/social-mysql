@@ -32,3 +32,8 @@ export default App;
 // register/login page  # sign in as a guest option #
 // feedpage
 // userpage
+
+// Site Name Help Buy
+
+// User requests Item
+// Another User Finds the Item to sell it to them
