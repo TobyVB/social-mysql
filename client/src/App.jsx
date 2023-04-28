@@ -37,3 +37,9 @@ export default App;
 
 // User requests Item
 // Another User Finds the Item to sell it to them
+
+// FOR NAV
+// if I want to make the sites nav work similar to the Freewater site
+// then I would put the nav as a layout. The inside of that have a div
+// in that div would be an outlet. That div will shrink and move out of the
+// page. That would make for a cool animation.
