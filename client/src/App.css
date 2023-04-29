@@ -47,3 +47,16 @@ body {
     background-position: 0% 50%;
   }
 }
+
+.navOpen {
+  animation: navOpenAnim 2s ease 1;
+  width: 50vw;
+}
+@keyframes navOpenAnim {
+  from {
+    width: 100vw;
+  }
+  to {
+    width: 50vw;
+  }
+}

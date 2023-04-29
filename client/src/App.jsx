@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import NavLayout from "./layouts/NavLayout";
 
 import "./App.css";
 
 function App() {
+  // What's the point in this site?
+  // It's another practice site for sure. Wouldn't be the job tracker site, because that's the other project.
+  // Alright this will be a meme making site, but it's social media.
+  // There will be no comments or anything, and the meme will be ranked by shares and or likes/ saves/ some shizz
+  // Maybe there could be comments, but that won't be included initially.. something to think about and consider both options.
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Login />} />
-        {/* <Route index element={<Store />} />
+        <Route to="/" element={<NavLayout />}>
+          <Route index element={<Login />} />
+          {/* <Route index element={<Store />} />
         <Route path="success" element={<Success />} />
         <Route path="cancel" element={<Cancel />} /> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

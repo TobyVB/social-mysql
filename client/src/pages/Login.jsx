@@ -1,40 +1,55 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [signup, setSignup] = useState(true);
+  const [signup, setSignup] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <div className=" h-screen flex flex-col content-center text-3x bg-slate-700 ">
-      <h1 className="text-center text-5xl pb-20 bg-clip-text text-transparent  font-extrabold text-transparent text-8xl  login-text my-28">
+      <h1 className="text-center text-5xl pb-20 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
         The TalkSpace 2.0
       </h1>
-      <div
-        className="login-bg-2"
-        style={{
-          display: "inline-flex",
-          margin: "0 auto",
-          padding: ".15em",
-          borderRadius: "3px",
-        }}
-      >
-        {signup ? (
+      <div className="login-bg-2 mx-auto my-3 inline-flex rounded-lg p-1">
+        {!signup ? (
           <div className=" backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
             <h1 className="pb-20 text-white  font-extrabold  text-6xl">
               Login
             </h1>
             <input className="p-2" type="email" />
             <input className="p-2" type="password" />
-            <button className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100">
+            <button
+              className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
+              // onClick={() => navigate("homepage")}
+            >
               login
             </button>
             <button className="p-2 text-white">continue as guest</button>
+            <button onClick={() => setSignup(true)} className=" text-white">
+              register
+            </button>
           </div>
         ) : (
-          <div>
-            <h1>Register</h1>
-            <input type="text" />
-            <input type="email" />
-            <input type="password" />
+          <div className="backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
+            <h1 className="pb-20 text-white  font-extrabold  text-6xl">
+              Register
+            </h1>
+            <input className="p-2" placeholder="Username" type="text" />
+            <input className="p-2" placeholder="Email" type="email" />
+            <input className="p-2" placeholder="Password" type="password" />
+            <button
+              className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
+              // onClick={() => navigate("homepage")}
+            >
+              register
+            </button>
+            <button
+              className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
+              onClick={() => setSignup(false)}
+            >
+              cancel
+            </button>
           </div>
         )}
       </div>
