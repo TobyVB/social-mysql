@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 export default function NavLayout() {
   const [navOpen, setNavOpen] = useState(false);
   const [navAnim, setNavAnim] = useState("");
@@ -11,15 +11,44 @@ export default function NavLayout() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: "100vw",
+        display: "flex",
+        overflow: "hidden",
+      }}
+      className=" login-bg"
+    >
       <div
         className={`fixed text-white right-10 top-5 cursor-pointer`}
         onClick={openNav}
       >
         {navOpen ? "close nav" : "open nav"}
       </div>
-      <div className={`${navAnim} h-screen overflow-hidden`}>
+      <div
+        className={`${navAnim}  overflow-x-hidden outlet-container`}
+        style={{ minWidth: "100vw", maxHeight: "100vh" }}
+      >
         <Outlet />
+        <section style={{ background: "black", color: "white" }}>
+          <h1>Footer</h1>
+        </section>
+      </div>
+      <div className=" text-center" style={{ minWidth: "300px" }}>
+        <ul className="pb-20 text-white  font-extrabold  text-3xl mt-40 flex flex-col gap-3">
+          <NavLink to="home">
+            <li onClick={openNav}>Home</li>
+          </NavLink>
+          <NavLink>
+            <li onClick={openNav}>Create</li>
+          </NavLink>
+          <NavLink onTouchCancel={"abbout"}>
+            <li onClick={openNav}>About</li>
+          </NavLink>
+          <NavLink to="/">
+            <li onClick={openNav}>Logout</li>
+          </NavLink>
+        </ul>
       </div>
     </div>
   );

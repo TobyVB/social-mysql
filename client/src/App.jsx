@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import NavLayout from "./layouts/NavLayout";
 
 import "./App.css";
+import Homepage from "./pages/Homepage";
+import About from "./pages/About";
 
 function App() {
   // What's the point in this site?
@@ -17,6 +19,8 @@ function App() {
       <Routes>
         <Route to="/" element={<NavLayout />}>
           <Route index element={<Login />} />
+          <Route path="home" element={<Homepage />} />
+          <Route path="about" element={<About />} />
           {/* <Route index element={<Store />} />
         <Route path="success" element={<Success />} />
         <Route path="cancel" element={<Cancel />} /> */}
