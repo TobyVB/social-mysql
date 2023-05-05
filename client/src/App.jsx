@@ -6,6 +6,7 @@ import NavLayout from "./layouts/NavLayout";
 import "./App.css";
 import Homepage from "./pages/Homepage";
 import About from "./pages/About";
+import Create from "./pages/Create";
 
 function App() {
   // What's the point in this site?
@@ -21,6 +22,7 @@ function App() {
           <Route index element={<Login />} />
           <Route path="home" element={<Homepage />} />
           <Route path="about" element={<About />} />
+          <Route path="create" element={<Create />} />
           {/* <Route index element={<Store />} />
         <Route path="success" element={<Success />} />
         <Route path="cancel" element={<Cancel />} /> */}

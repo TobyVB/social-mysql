@@ -46,10 +46,10 @@ export default function NavLayout() {
           <NavLink to="home">
             <li onClick={openNav}>Home</li>
           </NavLink>
-          <NavLink>
+          <NavLink to="create">
             <li onClick={openNav}>Create</li>
           </NavLink>
-          <NavLink>
+          <NavLink to="about">
             <li onClick={openNav}>About</li>
           </NavLink>
           <NavLink to="/">
