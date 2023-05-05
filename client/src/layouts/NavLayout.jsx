@@ -1,3 +1,4 @@
+import { GoEyeClosed, GoEye } from "react-icons/go";
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 export default function NavLayout() {
@@ -23,7 +24,7 @@ export default function NavLayout() {
         className={`fixed text-white right-10 top-5 cursor-pointer`}
         onClick={openNav}
       >
-        {navOpen ? "close nav" : "open nav"}
+        {navOpen ? <GoEyeClosed size="30px" /> : <GoEye size="30px" />}
       </div>
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
@@ -42,7 +43,7 @@ export default function NavLayout() {
           <NavLink>
             <li onClick={openNav}>Create</li>
           </NavLink>
-          <NavLink onTouchCancel={"abbout"}>
+          <NavLink>
             <li onClick={openNav}>About</li>
           </NavLink>
           <NavLink to="/">

@@ -19,8 +19,8 @@ export default function Homepage() {
       </section>
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-3 my-32">
-          {dummyMemes.map((meme) => {
-            return <Meme meme={meme} />;
+          {dummyMemes.map((meme, idx) => {
+            return <Meme key={idx} meme={meme} />;
           })}
         </div>
       </section>
