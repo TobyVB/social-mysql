@@ -85,3 +85,18 @@ body {
 .scroll-item {
   scroll-snap-align: end;
 } */
+.tempHide {
+  animation: tempHideAnim 0.65s ease 1;
+}
+
+@keyframes tempHideAnim {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}

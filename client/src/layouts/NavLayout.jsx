@@ -11,6 +11,8 @@ export default function NavLayout() {
       : [setNavAnim("navOpen"), setNavOpen(true)];
   }
 
+  const [navTogClass, setNavTogClass] = useState("tempHide");
+
   return (
     <div
       style={{
@@ -24,7 +26,11 @@ export default function NavLayout() {
         className={`fixed text-white right-10 top-5 cursor-pointer`}
         onClick={openNav}
       >
-        {navOpen ? <GoEyeClosed size="30px" /> : <GoEye size="30px" />}
+        {navOpen ? (
+          <GoEyeClosed className={navTogClass} size="30px" />
+        ) : (
+          <GoEye className={navTogClass} size="30px" />
+        )}
       </div>
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
