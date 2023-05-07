@@ -8,7 +8,9 @@ export default function Homepage() {
 
   function Meme(props) {
     return (
-      <div className=" text-8xl shrink-0  bg-red-200 p-10">{props.meme}</div>
+      <div className=" border-4 border-red-600 bg-orange-300 px-20 py-10">
+        <div className=" text-8xl shrink-0  bg-red-200 p-10">{props.meme}</div>
+      </div>
     );
   }
 
@@ -18,7 +20,7 @@ export default function Homepage() {
         <h1 className="text-6xl text-white text-center">Homepage</h1>
       </section>
       <section className="flex justify-center">
-        <div className="inline-flex flex-col gap-3 my-32">
+        <div className="inline-flex flex-col gap-5 my-32">
           {dummyMemes.map((meme, idx) => {
             return <Meme key={idx} meme={meme} />;
           })}
