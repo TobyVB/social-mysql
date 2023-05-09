@@ -36,7 +36,9 @@ export default function NavLayout() {
         className={`${navAnim}  overflow-x-hidden outlet-container`}
         style={{ minWidth: "100vw", maxHeight: "100vh" }}
       >
-        <Outlet />
+        <div className="border border-red-600">
+          <Outlet />
+        </div>
         <section style={{ background: "black", color: "white" }}>
           <h1>Footer</h1>
         </section>
