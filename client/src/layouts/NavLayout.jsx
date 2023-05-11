@@ -17,13 +17,14 @@ export default function NavLayout() {
     <div
       style={{
         maxWidth: "100vw",
+        minHeight: "100vh",
         display: "flex",
         overflow: "hidden",
       }}
-      className=" login-bg"
+      className=" login-bg -z-20"
     >
       <div
-        className={`fixed text-white right-10 top-5 cursor-pointer`}
+        className={`fixed text-white right-10 top-5 cursor-pointer z-20`}
         onClick={openNav}
       >
         {navOpen ? (
@@ -34,16 +35,14 @@ export default function NavLayout() {
       </div>
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
-        style={{ minWidth: "100vw", maxHeight: "100vh" }}
+        style={{ minWidth: "100vw" }}
       >
-        <div className="border border-red-600">
-          <Outlet />
-        </div>
+        <Outlet />
         <section style={{ background: "black", color: "white" }}>
           <h1>Footer</h1>
         </section>
       </div>
-      <div className=" text-center" style={{ minWidth: "300px" }}>
+      <div className=" text-center fixed right-10 -z-0" style={{}}>
         <ul className="pb-20 text-white  font-extrabold  text-3xl mt-40 flex flex-col gap-3">
           <NavLink to="home">
             <li onClick={openNav}>Home</li>
