@@ -21,10 +21,10 @@ export default function NavLayout() {
         display: "flex",
         overflow: "hidden",
       }}
-      className=" login-bg -z-20"
+      className=" login-bg -z-20 "
     >
       <div
-        className={`fixed text-white right-10 top-5 cursor-pointer z-20`}
+        className={`nav-tog fixed text-white right-10 top-5 cursor-pointer z-20 `}
         onClick={openNav}
       >
         {navOpen ? (
@@ -34,16 +34,10 @@ export default function NavLayout() {
         )}
       </div>
       <div
-        className={`${navAnim}  overflow-x-hidden outlet-container`}
-        style={{ minWidth: "100vw" }}
+        className=" wide-nav text-center fixed mt-4 w-screen"
+        style={{ zIndex: "2" }}
       >
-        <Outlet />
-        <section style={{ background: "black", color: "white" }}>
-          <h1>Footer</h1>
-        </section>
-      </div>
-      <div className=" text-center fixed right-10 -z-0" style={{}}>
-        <ul className="pb-20 text-white  font-extrabold  text-3xl mt-40 flex flex-col gap-3">
+        <ul className=" bg-slate-300 bg-opacity-50  text-white  font-light  text-3xl  flex gap-4 justify-center">
           <NavLink to="home">
             <li onClick={openNav}>Home</li>
           </NavLink>
@@ -57,6 +51,33 @@ export default function NavLayout() {
             <li onClick={openNav}>Logout</li>
           </NavLink>
         </ul>
+      </div>
+      <div
+        className={`${navAnim}  overflow-x-hidden outlet-container`}
+        style={{ minWidth: "100vw", maxHeight: "100vh", zIndex: "1" }}
+      >
+        <Outlet />
+        <section style={{ background: "black", color: "white" }}>
+          <h1>Footer</h1>
+        </section>
+      </div>
+      <div className="w-screen h-screen">
+        <div className="text-center fixed w-screen h-screen">
+          <ul className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
+            <NavLink to="home">
+              <li onClick={openNav}>Home</li>
+            </NavLink>
+            <NavLink to="create">
+              <li onClick={openNav}>Create</li>
+            </NavLink>
+            <NavLink to="about">
+              <li onClick={openNav}>About</li>
+            </NavLink>
+            <NavLink to="/">
+              <li onClick={openNav}>Logout</li>
+            </NavLink>
+          </ul>
+        </div>
       </div>
     </div>
   );

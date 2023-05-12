@@ -8,16 +8,16 @@ export default function Login() {
 
   return (
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center text-3x bg-slate-700">
-      <h1 className="mx-auto text-5xl pb-20 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
+      <h1 className="mx-auto text-xl pb-20 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
         The TalkSpace 2.0
       </h1>
       <div className="login-bg-2 mx-auto my-3 inline-flex rounded-lg p-1">
         {!signup ? (
           <div className=" backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
-            <h1 className="pb-20 text-white  font-extrabold  text-6xl">
+            <h1 className="pb-20 text-white  font-extrabold  text-2xl">
               Login
             </h1>
-            <h1 className="pb-20 text-transparent  font-extrabold  text-6xl -mt-40">
+            <h1 className="pb-20 text-transparent  font-extrabold  text-2xl -mt-40">
               Register
             </h1>
             <input className="p-2" type="email" />
@@ -40,7 +40,7 @@ export default function Login() {
           </div>
         ) : (
           <div className="backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
-            <h1 className="pb-20 text-white  font-extrabold  text-6xl">
+            <h1 className="pb-20 text-white  font-extrabold  text-2xl">
               Register
             </h1>
             <input className="p-2" placeholder="Username" type="text" />

@@ -48,37 +48,6 @@ body {
   }
 }
 
-.navOpen {
-  animation: navOpenAnim 0.65s ease 1;
-  transform: scale(0.75);
-  transform-origin: center left;
-}
-@keyframes navOpenAnim {
-  from {
-    transform: scale(1);
-    transform-origin: center left;
-  }
-  to {
-    transform: scale(0.75);
-    transform-origin: center left;
-  }
-}
-.navClose {
-  animation: navCloseAnim 0.65s ease 1;
-  transform: scale(1);
-  transform-origin: center left;
-}
-@keyframes navCloseAnim {
-  from {
-    transform: scale(0.75);
-    transform-origin: center left;
-  }
-  to {
-    transform: scale(1);
-    transform-origin: center left;
-  }
-}
-
 .login-main {
   min-width: 100vw;
 }
@@ -91,18 +60,72 @@ body {
 .scroll-item {
   scroll-snap-align: end;
 } */
-.tempHide {
-  animation: tempHideAnim 0.65s ease 1;
-}
 
-@keyframes tempHideAnim {
-  0% {
-    opacity: 0%;
+@media (max-width: 767px) {
+  .wide-nav {
+    display: none;
   }
-  50% {
-    opacity: 0%;
+  .tempHide {
+    animation: tempHideAnim 0.65s ease 1;
   }
-  100% {
-    opacity: 100%;
+
+  @keyframes tempHideAnim {
+    0% {
+      opacity: 0%;
+    }
+    50% {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+
+  .navOpen {
+    animation: navOpenAnim 0.65s ease 1;
+    transform: scale(0.8);
+    transform-origin: center left;
+    margin-left: -50vw;
+    /* border-radius: 100px; */
+  }
+  @keyframes navOpenAnim {
+    from {
+      transform: scale(1);
+      transform-origin: center left;
+      margin-left: 0px;
+      /* border-radius: 0px; */
+    }
+    to {
+      transform: scale(0.8);
+      transform-origin: center left;
+      margin-left: -50vw;
+      /* border-radius: 100px; */
+    }
+  }
+  .navClose {
+    animation: navCloseAnim 0.6s ease 1;
+    transform: scale(1);
+    transform-origin: center left;
+    margin-left: 0px;
+    /* border-radius: 0px; */
+  }
+  @keyframes navCloseAnim {
+    from {
+      transform: scale(0.8);
+      transform-origin: center left;
+      margin-left: -50vw;
+      /* border-radius: 100px; */
+    }
+    to {
+      transform: scale(1);
+      transform-origin: center left;
+      margin-left: 0px;
+      /* border-radius: 0px; */
+    }
+  }
+}
+@media (min-width: 768px) {
+  .nav-tog {
+    display: none;
   }
 }
