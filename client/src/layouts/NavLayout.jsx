@@ -37,7 +37,7 @@ export default function NavLayout() {
         className=" wide-nav text-center fixed mt-4 w-screen"
         style={{ zIndex: "2" }}
       >
-        <ul className=" bg-slate-300 bg-opacity-50  text-white  font-light  text-3xl  flex gap-4 justify-center">
+        <ul className="  bg-opacity-50  text-white  font-light  text-3xl  flex gap-4 justify-center">
           <NavLink to="home">
             <li onClick={openNav}>Home</li>
           </NavLink>
