@@ -37,24 +37,31 @@ export default function NavLayout() {
         className=" wide-nav text-center fixed mt-4 w-screen"
         style={{ zIndex: "2" }}
       >
-        <ul className="  bg-opacity-50  text-white  font-light  text-3xl  flex gap-4 justify-center">
+        <ul className="  bg-opacity-50  text-white  font-light  text-3xl  flex justify-around">
           <NavLink to="home">
             <li onClick={openNav}>Home</li>
           </NavLink>
-          <NavLink to="create">
-            <li onClick={openNav}>Create</li>
-          </NavLink>
-          <NavLink to="about">
-            <li onClick={openNav}>About</li>
-          </NavLink>
-          <NavLink to="/">
-            <li onClick={openNav}>Logout</li>
-          </NavLink>
+          <div className="flex justify-items-end gap-10">
+            <NavLink to="create">
+              <li onClick={openNav}>Create</li>
+            </NavLink>
+            <NavLink to="about">
+              <li onClick={openNav}>About</li>
+            </NavLink>
+            <NavLink to="/">
+              <li onClick={openNav}>Logout</li>
+            </NavLink>
+          </div>
         </ul>
       </div>
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
-        style={{ minWidth: "100vw", maxHeight: "100vh", zIndex: "1" }}
+        style={{
+          minWidth: "100vw",
+          maxWidth: "100vw",
+          maxHeight: "100vh",
+          zIndex: "1",
+        }}
       >
         <Outlet />
         <section style={{ background: "black", color: "white" }}>

@@ -16,7 +16,7 @@ export default function Homepage() {
 
   return (
     <div className=" bg-slate-500 min-h-screen">
-      <section className="p-20 ">
+      <section className="py-20">
         <h1 className="text-6xl text-white text-center">Homepage</h1>
       </section>
       <section className="flex justify-center">

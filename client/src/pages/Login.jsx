@@ -8,9 +8,10 @@ export default function Login() {
 
   return (
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center text-3x bg-slate-700">
-      <h1 className="mx-auto text-xl pb-20 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
-        The TalkSpace 2.0
-      </h1>
+      <div className="mx-auto text-xl2 pb-10 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
+        <h1 className="text-xl">The</h1>
+        <h1>TalkSpace</h1>
+      </div>
       <div className="login-bg-2 mx-auto my-3 inline-flex rounded-lg p-1">
         {!signup ? (
           <div className=" backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
