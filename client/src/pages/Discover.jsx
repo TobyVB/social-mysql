@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function Homepage() {
+export default function Discover() {
   // On this page all of the most trending memes
   // taken from this site.
 
@@ -17,7 +17,7 @@ export default function Homepage() {
   return (
     <div className=" bg-slate-500 min-h-screen">
       <section className="py-20">
-        <h1 className="text-6xl text-white text-center">Homepage</h1>
+        <h1 className="text-6xl text-white text-center">Discover</h1>
       </section>
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32">

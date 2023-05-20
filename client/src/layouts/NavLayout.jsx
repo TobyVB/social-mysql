@@ -38,8 +38,11 @@ export default function NavLayout() {
         style={{ zIndex: "2" }}
       >
         <ul className=" text-white  font-light  text-3xl  flex justify-around">
-          <NavLink to="home">
-            <li onClick={openNav}>Home</li>
+          <NavLink to="feed">
+            <li onClick={openNav}>Feed</li>
+          </NavLink>
+          <NavLink to="discover">
+            <li onClick={openNav}>Discover</li>
           </NavLink>
           <div className="flex justify-items-end gap-10">
             <NavLink to="create">
@@ -71,8 +74,11 @@ export default function NavLayout() {
       <div className="w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <ul className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
-            <NavLink to="home">
-              <li onClick={openNav}>Home</li>
+            <NavLink to="feed">
+              <li onClick={openNav}>Feed</li>
+            </NavLink>
+            <NavLink to="discover">
+              <li onClick={openNav}>Discover</li>
             </NavLink>
             <NavLink to="create">
               <li onClick={openNav}>Create</li>

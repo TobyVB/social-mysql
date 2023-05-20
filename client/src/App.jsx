@@ -4,7 +4,8 @@ import Login from "./pages/Login";
 import NavLayout from "./layouts/NavLayout";
 
 import "./App.css";
-import Homepage from "./pages/Homepage";
+import Discover from "./pages/Discover";
+import Feed from "./pages/Feed";
 import About from "./pages/About";
 import Create from "./pages/Create";
 
@@ -20,7 +21,8 @@ function App() {
       <Routes>
         <Route to="/" element={<NavLayout />}>
           <Route index element={<Login />} />
-          <Route path="home" element={<Homepage />} />
+          <Route path="feed" element={<Feed />} />
+          <Route path="discover" element={<Discover />} />
           <Route path="about" element={<About />} />
           <Route path="create" element={<Create />} />
           {/* <Route index element={<Store />} />
