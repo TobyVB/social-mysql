@@ -8,7 +8,7 @@ export default function Login() {
 
   return (
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center text-3x bg-slate-700">
-      <div className="mx-auto text-xl2 pb-10 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
+      <div className="mx-auto text-xl2 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
         <h1 className="text-xl">The</h1>
         <h1>TalkSpace</h1>
       </div>
@@ -40,8 +40,8 @@ export default function Login() {
             </button>
           </div>
         ) : (
-          <div className="backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto p-10 bg-login">
-            <h1 className="pb-20 text-white  font-extrabold  text-2xl">
+          <div className="backdrop-brightness-75 text-center gap-5 inline-flex flex-col  mx-auto px-10 pt-10 pb-4 bg-login">
+            <h1 className="pb-14 text-white  font-extrabold  text-2xl ">
               Register
             </h1>
             <input className="p-2" placeholder="Username" type="text" />
