@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Create() {
   const [texts, setTexts] = useState([
@@ -18,53 +18,60 @@ export default function Create() {
     });
   };
 
-  const [left, setLeft] = useState(0);
-  const [top, setTop] = useState(0);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
+  const MoveableInput = (props) => {
+    const handleMouseDown = (event) => {
+      setIsDragging(true);
+      setInitialPosition({
+        x: event.clientX - position.x,
+        y: event.clientY - position.y,
+      });
+    };
 
-  const handleDragStart = (event) => {
-    event.dataTransfer.setData("text/plain", ""); // Set data to enable dragging
-    setIsDragging(true);
-  };
+    const handleMouseMove = (event) => {
+      if (isDragging) {
+        setPosition({
+          x: event.clientX - initialPosition.x,
+          y: event.clientY - initialPosition.y,
+        });
+      }
+    };
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
 
-  const handleDrag = (event) => {
-    if (isDragging) {
-      const input = event.target;
-      const inputRect = input.getBoundingClientRect();
-
-      const newLeft = event.clientX - inputRect.width / 2;
-      const newTop = event.clientY - inputRect.height / 2;
-
-      setLeft(newLeft);
-      setTop(newTop);
-    }
-  };
-  const handleDragEnd = () => {
-    setIsDragging(false);
+    return (
+      <div
+        className="moveable-div p-10 bg-black"
+        style={{ top: position.y, left: position.x, position: "absolute" }}
+        // onMouseDown={handleMouseDown}
+        // onMouseMove={handleMouseMove}
+        // onMouseUp={handleMouseUp}
+        onPointerDown={handleMouseDown}
+        onPointerMove={handleMouseMove}
+        onPointerUp={handleMouseUp}
+      >
+        <input
+          key={props.idx}
+          value={props.text.text}
+          onChange={(e) => handleChange(e, props.idx)}
+          autoFocus={selected === props.idx}
+          onClick={() => setSelected(props.idx)}
+        />
+      </div>
+    );
   };
 
   function Inputs() {
     console.log(texts);
     return texts.map((text, idx) => {
-      return (
-        <input
-          key={idx}
-          // className={`${text.top} ${text.left}`}
-          style={{ marginLeft: `${left}px`, marginTop: `${top}px` }}
-          value={text.text}
-          onChange={(e) => handleChange(e, idx)}
-          autoFocus={selected === idx}
-          onClick={() => setSelected(idx)}
-          draggable
-          onDragStart={handleDragStart}
-          onDrag={handleDrag}
-          onDragEnd={handleDragEnd}
-        />
-      );
+      return <MoveableInput text={text} idx={idx} />;
     });
   }
   function createInput() {
-    setTexts((prev) => [...prev, { text: "", left: "ml-6", top: "mt-6" }]);
+    setTexts((prev) => [...prev, { text: "" }]);
   }
   return (
     <div className="bg-slate-500 min-h-screen">
