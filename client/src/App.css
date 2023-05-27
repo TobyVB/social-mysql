@@ -123,9 +123,17 @@ body {
       /* border-radius: 0px; */
     }
   }
+  .create-image {
+    width: 90vw;
+  }
 }
 @media (min-width: 768px) {
   .nav-tog {
     display: none;
+  }
+  .create-input {
+  }
+  .create-image {
+    width: 70vw;
   }
 }

@@ -8,37 +8,6 @@ export default function Create() {
   const textareaRef2 = useRef(null);
   const [selected, setSelected] = useState(0);
 
-  const divWidth = 400;
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setMemeObj((prev) => ({ ...prev, bg: reader.result }));
-    };
-    reader.readAsDataURL(file);
-  };
-
-  useEffect(() => {
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const img = new Image();
-        img.onload = () => {
-          const { naturalWidth, naturalHeight } = img;
-          const aspectRatio = naturalWidth / naturalHeight;
-          const height = Math.round(divWidth / aspectRatio);
-          divRef.current.style.height = `${height}px`;
-        };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(selectedFile);
-    }
-  }, [selectedFile, divWidth]);
-
   useEffect(() => {
     if (selected === 1) {
       adjustTextareaHeight(1);
@@ -59,6 +28,59 @@ export default function Create() {
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (divRef.current) {
+        const width = divRef.current.offsetWidth;
+        console.log("Width:", width);
+        // You can store the width in the component state or perform any other necessary actions
+
+        // Adjust the height based on the aspect ratio of the currently selected background image
+        const backgroundImageUrl = divRef.current.style.backgroundImage
+          .slice(4, -1)
+          .replace(/"/g, "");
+        const tempImg = new Image();
+        tempImg.src = backgroundImageUrl;
+        tempImg.onload = () => {
+          const aspectRatio = tempImg.width / tempImg.height;
+          const height = width / aspectRatio;
+          divRef.current.style.height = `${height}px`;
+        };
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize initially to get the width on component mount
+    handleResize();
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const image = new Image();
+        image.src = event.target.result;
+        image.onload = () => {
+          const aspectRatio = image.width / image.height;
+          const width = divRef.current.offsetWidth;
+          const height = width / aspectRatio;
+          divRef.current.style.backgroundImage = `url(${event.target.result})`;
+          divRef.current.style.height = `${height}px`;
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="bg-slate-500 min-h-screen">
       <section className="p-20 ">
@@ -74,7 +96,8 @@ export default function Create() {
           type="file"
           name="myImage"
           accept="image/png image/gif image/jpeg image/jpg"
-          onChange={handleFileInputChange}
+          onChange={handleFileChange}
+          ref={fileInputRef}
         />
       </section>
 
@@ -82,13 +105,9 @@ export default function Create() {
         <div
           ref={divRef}
           style={{
-            backgroundImage: `url(${
-              selectedFile ? URL.createObjectURL(selectedFile) : ""
-            })`,
             backgroundSize: "cover",
-            width: `${divWidth}px`,
           }}
-          className="w-80 m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
+          className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
         >
           <textarea
             placeholder="enter top text here"
@@ -99,7 +118,7 @@ export default function Create() {
               setMemeObj((prev) => ({ ...prev, topText: e.target.value }))
             }
             style={{ textShadow: "1px 1px 1px black" }}
-            className="bg-transparent text-center text-white shadow-black"
+            className="create-input bg-transparent text-center text-white shadow-black"
           />
           <textarea
             placeholder="enter bottom text here"
@@ -110,7 +129,7 @@ export default function Create() {
               setMemeObj((prev) => ({ ...prev, botText: e.target.value }))
             }
             style={{ textShadow: "1px 1px 1px black" }}
-            className="bg-transparent text-center text-white shadow-black"
+            className="create-input bg-transparent text-center text-white shadow-black"
           />
         </div>
       </section>
