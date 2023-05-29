@@ -2,11 +2,11 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Create() {
   const [memeObj, setMemeObj] = useState({ bg: "", topText: "", botText: "" });
-  console.log(memeObj);
   const divRef = useRef(null);
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
   const [selected, setSelected] = useState(0);
+  console.log(memeObj);
 
   useEffect(() => {
     if (selected === 1) {
@@ -23,7 +23,6 @@ export default function Create() {
     } else if (num === 2) {
       textarea = textareaRef2.current;
     }
-
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
@@ -34,7 +33,6 @@ export default function Create() {
         const width = divRef.current.offsetWidth;
         console.log("Width:", width);
         // You can store the width in the component state or perform any other necessary actions
-
         // Adjust the height based on the aspect ratio of the currently selected background image
         const backgroundImageUrl = divRef.current.style.backgroundImage
           .slice(4, -1)
@@ -48,12 +46,9 @@ export default function Create() {
         };
       }
     };
-
     window.addEventListener("resize", handleResize);
-
     // Call handleResize initially to get the width on component mount
     handleResize();
-
     // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -64,6 +59,7 @@ export default function Create() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -74,6 +70,7 @@ export default function Create() {
           const width = divRef.current.offsetWidth;
           const height = width / aspectRatio;
           divRef.current.style.backgroundImage = `url(${event.target.result})`;
+          setMemeObj((prev) => ({ ...prev, bg: event.target.result }));
           divRef.current.style.height = `${height}px`;
         };
       };
@@ -82,10 +79,10 @@ export default function Create() {
   };
 
   return (
-    <div className="bg-slate-500 min-h-screen">
-      <section className="p-20 ">
+    <div className="bg-slate-500 min-h-screen py-48">
+      {/* <section className="p-20 ">
         <h1 className="text-6xl text-white text-center">Create</h1>
-      </section>
+      </section> */}
       <section className="flex flex-col pb-5">
         <label className="block mx-auto text-2xl text-white">
           Your Image File
@@ -95,7 +92,7 @@ export default function Create() {
           className="block mx-auto"
           type="file"
           name="myImage"
-          accept="image/png image/gif image/jpeg image/jpg"
+          accept="image/png image/gif image/jpeg image/jpg image/HEIC"
           onChange={handleFileChange}
           ref={fileInputRef}
         />
@@ -106,6 +103,7 @@ export default function Create() {
           ref={divRef}
           style={{
             backgroundSize: "cover",
+            // backgroundImage: `url(${memeObj.bg})`,
           }}
           className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
         >

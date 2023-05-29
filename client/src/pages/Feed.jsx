@@ -15,10 +15,10 @@ export default function Feed() {
   }
 
   return (
-    <div className=" bg-slate-500 min-h-screen">
-      <section className="py-20">
+    <div className=" bg-slate-500 min-h-screen py-20">
+      {/* <section className="py-20">
         <h1 className="text-6xl text-white text-center">Feed</h1>
-      </section>
+      </section> */}
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32">
           {dummyMemes.map((meme, idx) => {

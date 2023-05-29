@@ -8,7 +8,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Vega1562Programmer",
-  database: "test",
+  database: "memespace",
 });
 
 app.use(express.json());
@@ -18,26 +18,27 @@ app.get("/", (req, res) => {
   res.json("hello this is the backend");
 });
 
-app.get("/books", (req, res) => {
-  const q = "SELECT * FROM test.books";
+app.get("/discover", (req, res) => {
+  const q = "SELECT * FROM memespace.memes";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
 });
 
-app.post("/books", (req, res) => {
-  const q = "INSERT INTO books (`title`, `desc`, `price`, `cover`) VALUES (?)";
-  const values = [
-    req.body.title,
-    req.body.desc,
-    req.body.price,
-    req.body.cover,
-  ];
+app.post("/discover", (req, res) => {
+  const q = "INSERT INTO memes (`id`, `topText`, `botText`, `bg`) VALUES (?)";
+  // const values = [req.body.id, req.body.topText, req.body.botText, req.body.bg];
+  const values = {
+    id: 1,
+    topText: "This is the top text",
+    botText: "This is bot text",
+    bg: "bg.png",
+  };
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Book has been created");
+    return res.json("Meme has been created");
   });
 });
 

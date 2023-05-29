@@ -37,25 +37,25 @@ export default function NavLayout() {
         className="backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
         style={{ zIndex: "2" }}
       >
-        <ul className=" text-white  font-light  text-3xl  flex justify-around">
-          <NavLink to="feed">
-            <li onClick={openNav}>Feed</li>
+        <div className="text-white font-light  text-3xl  flex justify-around">
+          <NavLink onClick={openNav} to="feed">
+            Feed
           </NavLink>
-          <NavLink to="discover">
-            <li onClick={openNav}>Discover</li>
+          <NavLink onClick={openNav} to="discover">
+            Discover
           </NavLink>
           <div className="flex justify-items-end gap-10">
-            <NavLink to="create">
-              <li onClick={openNav}>Create</li>
+            <NavLink onClick={openNav} to="create">
+              Create
             </NavLink>
-            <NavLink to="about">
-              <li onClick={openNav}>About</li>
+            <NavLink onClick={openNav} to="about">
+              About
             </NavLink>
-            <NavLink to="/">
-              <li onClick={openNav}>Logout</li>
+            <NavLink onClick={openNav} to="/">
+              Logout
             </NavLink>
           </div>
-        </ul>
+        </div>
       </div>
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
@@ -73,23 +73,23 @@ export default function NavLayout() {
       </div>
       <div className="w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
-          <ul className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
-            <NavLink to="feed">
-              <li onClick={openNav}>Feed</li>
+          <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
+            <NavLink to="feed" onClick={openNav}>
+              Feed
             </NavLink>
-            <NavLink to="discover">
-              <li onClick={openNav}>Discover</li>
+            <NavLink to="discover" onClick={openNav}>
+              Discover
             </NavLink>
-            <NavLink to="create">
-              <li onClick={openNav}>Create</li>
+            <NavLink to="create" onClick={openNav}>
+              Create
             </NavLink>
-            <NavLink to="about">
-              <li onClick={openNav}>About</li>
+            <NavLink to="about" onClick={openNav}>
+              About
             </NavLink>
-            <NavLink to="/">
-              <li onClick={openNav}>Logout</li>
+            <NavLink to="/" onClick={openNav}>
+              Logout
             </NavLink>
-          </ul>
+          </div>
         </div>
       </div>
     </div>
