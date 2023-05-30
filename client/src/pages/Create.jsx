@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Create() {
   const [memeObj, setMemeObj] = useState({ bg: "", topText: "", botText: "" });
@@ -6,6 +8,7 @@ export default function Create() {
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
   const [selected, setSelected] = useState(0);
+  const navigate = useNavigate();
   console.log(memeObj);
 
   useEffect(() => {
@@ -78,6 +81,17 @@ export default function Create() {
     }
   };
 
+  const publish = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8800/memes", memeObj);
+      console.log(memeObj);
+      navigate("/discover");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="bg-slate-500 min-h-screen py-48">
       {/* <section className="p-20 ">
@@ -131,7 +145,10 @@ export default function Create() {
           />
         </div>
       </section>
-      <button className="block border-neutral-800 border-2 rounded p-1 mx-auto mt-5">
+      <button
+        onClick={publish}
+        className="block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
+      >
         Publish
       </button>
     </div>

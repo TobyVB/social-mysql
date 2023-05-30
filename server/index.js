@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.json("hello this is the backend");
 });
 
-app.get("/discover", (req, res) => {
+app.get("/memes", (req, res) => {
   const q = "SELECT * FROM memespace.memes";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
@@ -26,15 +26,9 @@ app.get("/discover", (req, res) => {
   });
 });
 
-app.post("/discover", (req, res) => {
+app.post("/memes", (req, res) => {
   const q = "INSERT INTO memes (`id`, `topText`, `botText`, `bg`) VALUES (?)";
-  // const values = [req.body.id, req.body.topText, req.body.botText, req.body.bg];
-  const values = {
-    id: 1,
-    topText: "This is the top text",
-    botText: "This is bot text",
-    bg: "bg.png",
-  };
+  const values = [req.body.id, req.body.topText, req.body.botText, req.body.bg];
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -42,33 +36,33 @@ app.post("/discover", (req, res) => {
   });
 });
 
-app.delete("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  const q = "DELETE FROM  books WHERE id = ?";
+app.delete("/memes/:id", (req, res) => {
+  const memeId = req.params.id;
+  const q = "DELETE FROM memes WHERE id = ?";
 
-  db.query(q, [bookId], (err, data) => {
+  db.query(q, [memeId], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Book has been deleted");
+    return res.json("Meme has been deleted");
   });
 });
 
-app.put("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  const q =
-    "UPDATE books SET `title` = ?, `desc` = ?, `price` = ?, `cover` = ? WHERE id = ?";
+// app.put("/books/:id", (req, res) => {
+//   const bookId = req.params.id;
+//   const q =
+//     "UPDATE books SET `title` = ?, `desc` = ?, `price` = ?, `cover` = ? WHERE id = ?";
 
-  const values = [
-    req.body.title,
-    req.body.desc,
-    req.body.price,
-    req.body.cover,
-  ];
+//   const values = [
+//     req.body.title,
+//     req.body.desc,
+//     req.body.price,
+//     req.body.cover,
+//   ];
 
-  db.query(q, [...values, bookId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Book has been updated");
-  });
-});
+//   db.query(q, [...values, bookId], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Book has been updated");
+//   });
+// });
 
 app.listen(8800, () => {
   console.log("Connected to server.");
