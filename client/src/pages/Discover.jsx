@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import axios from "axios";
 
 export default function Discover() {
@@ -30,12 +30,20 @@ export default function Discover() {
     }
   };
 
+  useEffect(() => {
+    memes.forEach((meme) => {
+      console.log(JSON.stringify(meme.bg));
+    });
+  }, [memes]);
+
   function Meme(props) {
     return (
       <>
         <div
           className=" border-4 border-red-600 px-20 py-10"
-          style={{ backgroundImage: `url(${props.meme.bg})` }}
+          // style={{
+          //   backgroundImage: dataURL,
+          // }}
         >
           <p className="p-10">{props.meme.topText}</p>
           <p className="p-10">{props.meme.botText}</p>
@@ -43,6 +51,10 @@ export default function Discover() {
         <div className="mx-auto flex gap-3">
           <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
           <button>Update</button>
+          <img
+            src={props.meme.bg.data}
+            style={{ height: "50px", width: "50px" }}
+          />
         </div>
       </>
     );

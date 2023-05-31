@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Resizer from "react-image-file-resizer";
 
 export default function Create() {
   const [memeObj, setMemeObj] = useState({ bg: "", topText: "", botText: "" });
-  const divRef = useRef(null);
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
   const [selected, setSelected] = useState(0);
   const navigate = useNavigate();
-  console.log(memeObj);
 
   useEffect(() => {
     if (selected === 1) {
@@ -30,61 +29,35 @@ export default function Create() {
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (divRef.current) {
-        const width = divRef.current.offsetWidth;
-        console.log("Width:", width);
-        // You can store the width in the component state or perform any other necessary actions
-        // Adjust the height based on the aspect ratio of the currently selected background image
-        const backgroundImageUrl = divRef.current.style.backgroundImage
-          .slice(4, -1)
-          .replace(/"/g, "");
-        const tempImg = new Image();
-        tempImg.src = backgroundImageUrl;
-        tempImg.onload = () => {
-          const aspectRatio = tempImg.width / tempImg.height;
-          const height = width / aspectRatio;
-          divRef.current.style.height = `${height}px`;
-        };
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    // Call handleResize initially to get the width on component mount
-    handleResize();
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
+
     console.log(file);
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const image = new Image();
-        image.src = event.target.result;
-        image.onload = () => {
-          const aspectRatio = image.width / image.height;
-          const width = divRef.current.offsetWidth;
-          const height = width / aspectRatio;
-          divRef.current.style.backgroundImage = `url(${event.target.result})`;
-          setMemeObj((prev) => ({ ...prev, bg: event.target.result }));
-          divRef.current.style.height = `${height}px`;
-        };
-      };
-      reader.readAsDataURL(file);
+      Resizer.imageFileResizer(
+        file,
+        3000, // Max width
+        3000, // Max height
+        "jpeg", // Output format
+        5, // Max file size in KB
+        0, // Rotation
+        (compressedImage) => {
+          console.log("Compressed Image:", compressedImage);
+          // Perform further actions with the compressed image, such as uploading it to a server
+          setMemeObj((prev) => ({ ...prev, bg: compressedImage }));
+        },
+        "base64", // Output type
+        200 // Quality (optional)
+      );
     }
   };
 
   const publish = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/memes", memeObj);
+      await axios.post("http://localhost:8800/memes ", memeObj);
       console.log(memeObj);
       navigate("/discover");
     } catch (err) {
@@ -113,14 +86,7 @@ export default function Create() {
       </section>
 
       <section>
-        <div
-          ref={divRef}
-          style={{
-            backgroundSize: "cover",
-            // backgroundImage: `url(${memeObj.bg})`,
-          }}
-          className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
-        >
+        <div className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain">
           <textarea
             placeholder="enter top text here"
             onClick={() => setSelected(1)}
@@ -132,6 +98,8 @@ export default function Create() {
             style={{ textShadow: "1px 1px 1px black" }}
             className="create-input bg-transparent text-center text-white shadow-black"
           />
+          <img src={memeObj.bg} style={{ width: "90vw" }} className="mx-auto" />
+
           <textarea
             placeholder="enter bottom text here"
             onClick={() => setSelected(2)}

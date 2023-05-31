@@ -1,6 +1,7 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import multer from "multer";
 
 const app = express();
 
@@ -13,6 +14,8 @@ const db = mysql.createConnection({
 
 app.use(express.json());
 app.use(cors());
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.get("/", (req, res) => {
   res.json("hello this is the backend");
