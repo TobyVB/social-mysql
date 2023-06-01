@@ -5,20 +5,29 @@ export default function Discover() {
   // On this page all of the most trending memes
   // taken from this site.
 
-  const dummyMemes = [1, 2, 3, 4, 5];
   const [memes, setMemes] = useState([]);
+  const [memesReady, setMemesReady] = useState(false);
+
+  function converter(data) {
+    const blob = new Blob([data], { type: "image/jpg" }); // Modify the MIME type as per your image format
+    const dataURL = URL.createObjectURL(blob);
+    return dataURL;
+  }
 
   useEffect(() => {
-    const fetchAllBooks = async () => {
+    const fetchAllMemes = async () => {
       try {
         const res = await axios.get("http://localhost:8800/memes");
-        console.log(res);
-        setMemes(res.data);
+        setMemes(
+          res.data.map((meme) => {
+            return { ...meme, bg: meme.bg };
+          })
+        );
       } catch (err) {
         console.log(err);
       }
     };
-    fetchAllBooks();
+    fetchAllMemes();
   }, []);
 
   const handleDelete = async (id) => {
@@ -37,13 +46,15 @@ export default function Discover() {
   }, [memes]);
 
   function Meme(props) {
+    console.log(`data:image/jpeg;base64,${props.meme.bg[0]}`);
+
     return (
       <>
         <div
           className=" border-4 border-red-600 px-20 py-10"
-          // style={{
-          //   backgroundImage: dataURL,
-          // }}
+          style={{
+            backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg})`,
+          }}
         >
           <p className="p-10">{props.meme.topText}</p>
           <p className="p-10">{props.meme.botText}</p>
@@ -52,7 +63,7 @@ export default function Discover() {
           <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
           <button>Update</button>
           <img
-            src={props.meme.bg.data}
+            src={`data:image/jpeg;base64,${props.meme.bg[0]}`}
             style={{ height: "50px", width: "50px" }}
           />
         </div>
@@ -68,7 +79,7 @@ export default function Discover() {
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32">
           {memes.map((meme, idx) => {
-            return <Meme key={idx} meme={meme} />;
+            return <Meme key={idx} idx={idx} meme={meme} />;
           })}
         </div>
       </section>
