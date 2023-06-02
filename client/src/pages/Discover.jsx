@@ -51,7 +51,7 @@ export default function Discover() {
     return (
       <>
         <div
-          className=" border-4 border-red-600 px-20 py-10"
+          className=" border-2 border-x-stone-950 px-20 py-10"
           style={{
             backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg})`,
           }}
