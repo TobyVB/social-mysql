@@ -37,24 +37,23 @@ export default function NavLayout() {
         className="backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
         style={{ zIndex: "2" }}
       >
-        <div className="text-white font-light  text-3xl  flex justify-around">
+        <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
           <NavLink onClick={openNav} to="feed">
             Feed
           </NavLink>
           <NavLink onClick={openNav} to="discover">
             Discover
           </NavLink>
-          <div className="flex justify-items-end gap-10">
-            <NavLink onClick={openNav} to="create">
-              Create
-            </NavLink>
-            <NavLink onClick={openNav} to="about">
-              About
-            </NavLink>
-            <NavLink onClick={openNav} to="/">
-              Logout
-            </NavLink>
-          </div>
+
+          <NavLink onClick={openNav} to="create">
+            Create
+          </NavLink>
+          <NavLink onClick={openNav} to="about">
+            About
+          </NavLink>
+          <NavLink onClick={openNav} to="/">
+            Logout
+          </NavLink>
         </div>
       </div>
       <div
