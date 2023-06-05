@@ -46,14 +46,14 @@ export default function Discover() {
   }, [memes]);
 
   function Meme(props) {
-    console.log(`data:image/jpeg;base64,${props.meme.bg[0]}`);
+    // console.log(`data:image/jpeg;base64,${props.meme.bg[0]}`);
 
     return (
       <>
         <div
           className=" border-2 border-x-stone-950 px-20 py-10"
           style={{
-            backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg})`,
+            backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg[0]})`,
           }}
         >
           <p className="p-10">{props.meme.topText}</p>
@@ -63,9 +63,10 @@ export default function Discover() {
           <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
           <button>Update</button>
           <img
-            src={`data:image/jpeg;base64,${props.meme.bg[0]}`}
+            src={`data:image/jpeg;base64, ${props.meme.bg[0]}`}
             style={{ height: "50px", width: "50px" }}
           />
+          <img src={props.meme.bg} style={{ height: "50px", width: "50px" }} />
         </div>
       </>
     );
@@ -73,9 +74,6 @@ export default function Discover() {
 
   return (
     <div className=" bg-slate-500 min-h-screen py-20">
-      {/* <section className="py-20">
-        <h1 className="text-6xl text-white text-center">Discover</h1>
-      </section> */}
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32">
           {memes.map((meme, idx) => {

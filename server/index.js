@@ -28,7 +28,7 @@ app.get("/memes", (req, res) => {
     // return res.json(data);
     return res.json(
       data.map((dat) => {
-        return { ...dat, bg: [dat.bg.toString("base64")] };
+        return { ...dat, bg: [base64ToFile(dat.bg.toString("base64"))] };
       })
     );
   });

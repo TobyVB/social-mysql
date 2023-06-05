@@ -67,7 +67,7 @@ export default function NavLayout() {
       >
         <Outlet />
         <section style={{ background: "black", color: "white" }}>
-          <h1>Footer</h1>
+          <h1>&copy; 2023</h1>
         </section>
       </div>
       <div className="w-screen h-screen">
