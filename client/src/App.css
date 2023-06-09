@@ -141,3 +141,12 @@ body {
   color: coral;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
 }
+input::file-selector-button {
+  font-weight: bold;
+  color: coral;
+  padding: 0.5em;
+  margin-top: 2em;
+  border: none;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.5);
+}
