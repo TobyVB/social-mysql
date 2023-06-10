@@ -112,7 +112,7 @@ export default function Create() {
       </section>
       <button
         onClick={publish}
-        className="block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
+        className="publish block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
       >
         Publish
       </button>
