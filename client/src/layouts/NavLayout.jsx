@@ -66,8 +66,11 @@ export default function NavLayout() {
         }}
       >
         <Outlet />
-        <section style={{ background: "black", color: "white" }}>
-          <h1>&copy; 2023</h1>
+        <section
+          className="h-20 flex justify-center"
+          style={{ background: "black", color: "white" }}
+        >
+          <h1 className="my-auto">&copy; 2023</h1>
         </section>
       </div>
       <div className="w-screen h-screen">
