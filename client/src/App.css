@@ -150,4 +150,5 @@ input::file-selector-button,
   border: none;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
