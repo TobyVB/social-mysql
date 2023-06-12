@@ -24,17 +24,17 @@ export default function Login() {
             <input className="p-2" type="email" />
             <input className="p-2" type="password" />
             <button
-              className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
+              className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100"
               // onClick={() => navigate("homepage")}
             >
               login
             </button>
-            <button className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100">
+            <button className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100 text">
               continue as guest
             </button>
             <button
               onClick={() => setSignup(true)}
-              className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
+              className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100 text"
             >
               register
             </button>
