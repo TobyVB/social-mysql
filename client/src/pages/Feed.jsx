@@ -34,7 +34,7 @@ export default function Feed() {
     return (
       <>
         <div
-          className=" border-2 border-x-stone-950 px-20 py-10"
+          className="px-20 py-10"
           style={{ backgroundImage: `url(${props.meme.bg})` }}
         >
           <p className="p-10">{props.meme.topText}</p>

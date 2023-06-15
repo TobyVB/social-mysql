@@ -71,7 +71,6 @@ export default function Create() {
         <label className="block mx-auto text-2xl text-white">
           Your Image File
         </label>
-
         <input
           className="block mx-auto"
           type="file"

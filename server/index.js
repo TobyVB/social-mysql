@@ -25,12 +25,7 @@ app.get("/memes", (req, res) => {
   const q = "SELECT * FROM memespace.memes";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
-    // return res.json(data);
-    return res.json(
-      data.map((dat) => {
-        return { ...dat, bg: [base64ToFile(dat.bg.toString("base64"))] };
-      })
-    );
+    return res.json(data);
   });
 });
 

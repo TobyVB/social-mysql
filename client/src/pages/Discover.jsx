@@ -6,13 +6,6 @@ export default function Discover() {
   // taken from this site.
 
   const [memes, setMemes] = useState([]);
-  const [memesReady, setMemesReady] = useState(false);
-
-  function converter(data) {
-    const blob = new Blob([data], { type: "image/jpg" }); // Modify the MIME type as per your image format
-    const dataURL = URL.createObjectURL(blob);
-    return dataURL;
-  }
 
   useEffect(() => {
     const fetchAllMemes = async () => {
@@ -51,9 +44,10 @@ export default function Discover() {
     return (
       <>
         <div
-          className=" border-2 border-x-stone-950 px-20 py-10"
+          className="px-20 py-10"
           style={{
-            backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg[0]})`,
+            background: "coral",
+            // backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg[0]})`,
           }}
         >
           <p className="p-10">{props.meme.topText}</p>
@@ -62,11 +56,11 @@ export default function Discover() {
         <div className="mx-auto flex gap-3">
           <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
           <button>Update</button>
-          <img
+          {/* <img
             src={`data:image/jpeg;base64, ${props.meme.bg[0]}`}
             style={{ height: "50px", width: "50px" }}
           />
-          <img src={props.meme.bg} style={{ height: "50px", width: "50px" }} />
+          <img src={props.meme.bg} style={{ height: "50px", width: "50px" }} /> */}
         </div>
       </>
     );
