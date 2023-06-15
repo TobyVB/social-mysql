@@ -152,7 +152,8 @@ body {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
 }
 input::file-selector-button,
-.publish {
+.publish,
+.accent-btn {
   font-weight: bold;
   color: coral;
   padding: 0.5em;

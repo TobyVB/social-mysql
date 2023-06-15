@@ -35,14 +35,20 @@ export default function Feed() {
       <>
         <div
           className="px-20 py-10"
-          style={{ backgroundImage: `url(${props.meme.bg})` }}
+          style={{ background: "coral" }}
+          // style={{ backgroundImage: `url(${props.meme.bg})` }}
         >
           <p className="p-10">{props.meme.topText}</p>
           <p className="p-10">{props.meme.botText}</p>
         </div>
         <div className="mx-auto flex gap-3">
-          <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
-          <button>Update</button>
+          <button
+            className="accent-btn "
+            onClick={() => handleDelete(props.meme.id)}
+          >
+            Delete
+          </button>
+          <button className="accent-btn ">Update</button>
         </div>
       </>
     );

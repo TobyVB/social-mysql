@@ -54,8 +54,13 @@ export default function Discover() {
           <p className="p-10">{props.meme.botText}</p>
         </div>
         <div className="mx-auto flex gap-3">
-          <button onClick={() => handleDelete(props.meme.id)}>Delete</button>
-          <button>Update</button>
+          <button
+            className="accent-btn "
+            onClick={() => handleDelete(props.meme.id)}
+          >
+            Delete
+          </button>
+          <button className="accent-btn ">Update</button>
           {/* <img
             src={`data:image/jpeg;base64, ${props.meme.bg[0]}`}
             style={{ height: "50px", width: "50px" }}
