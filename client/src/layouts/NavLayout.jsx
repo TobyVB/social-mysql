@@ -81,7 +81,7 @@ export default function NavLayout() {
           <p className="mx-auto">&copy; 2023</p>
         </section>
       </div>
-      <div className="w-screen h-screen">
+      <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
             <NavLink to="feed" onClick={openNav}>
