@@ -12,6 +12,7 @@ export default function Create() {
   const navigate = useNavigate();
   const [cloudName, setCloudName] = useState();
   const [uploadPreset, setUploadPreset] = useState();
+  const [imageDataUrl, setImageDataUrl] = useState("");
 
   useEffect(() => {
     const getKeys = async () => {
@@ -47,8 +48,6 @@ export default function Create() {
   };
 
   const fileInputRef = useRef(null);
-
-  const [imageDataUrl, setImageDataUrl] = useState("");
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -120,13 +119,22 @@ export default function Create() {
               setMemeObj((prev) => ({ ...prev, topText: e.target.value }))
             }
             style={{ textShadow: "1px 1px 1px black" }}
-            className="create-input bg-transparent text-center text-white shadow-black"
+            className="create-input bg-transparent text-center text-white shadow-black -mb-10 z-50"
           />
-          <img
-            src={imageDataUrl}
-            style={{ width: "90vw" }}
-            className="mx-auto"
-          />
+          <div>
+            {imageDataUrl === "" ? (
+              <div
+                className="mx-auto"
+                style={{ width: "90vw", height: "30vw" }}
+              ></div>
+            ) : (
+              <img
+                src={imageDataUrl}
+                style={{ width: "90vw" }}
+                className="mx-auto"
+              />
+            )}
+          </div>
 
           <textarea
             placeholder="enter bottom text here"
@@ -137,7 +145,7 @@ export default function Create() {
               setMemeObj((prev) => ({ ...prev, botText: e.target.value }))
             }
             style={{ textShadow: "1px 1px 1px black" }}
-            className="create-input bg-transparent text-center text-white shadow-black"
+            className="create-input bg-transparent text-center text-white shadow-black -mt-10"
           />
         </div>
       </section>

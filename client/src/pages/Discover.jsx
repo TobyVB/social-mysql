@@ -41,10 +41,14 @@ export default function Discover() {
   function Meme(props) {
     return (
       <>
-        <div className="py-20">
-          <p className="-mb-10 text-center text-white">{props.meme.topText}</p>
-          <img className="px-20" src={props.meme.img} />
-          <p className="-mt-10 text-center text-white text-4xl">
+        <div className="py-20 flex flex-col">
+          <p className="m-0 -mb-10 text-center text-white z-50 text-xl">
+            {props.meme.topText}
+          </p>
+          <div>
+            <img className="px-20" src={props.meme.img} />
+          </div>
+          <p className="m-0 -mt-10 text-center text-white text-xl">
             {props.meme.botText}
           </p>
         </div>
