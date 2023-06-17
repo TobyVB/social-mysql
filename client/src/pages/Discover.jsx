@@ -1,21 +1,14 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Discover() {
-  // On this page all of the most trending memes
-  // taken from this site.
-
   const [memes, setMemes] = useState([]);
 
   useEffect(() => {
     const fetchAllMemes = async () => {
       try {
         const res = await axios.get("http://localhost:8800/memes");
-        setMemes(
-          res.data.map((meme) => {
-            return { ...meme, bg: meme.bg };
-          })
-        );
+        setMemes(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -23,22 +16,27 @@ export default function Discover() {
     fetchAllMemes();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (meme) => {
+    console.log("this is publicId " + meme.publicId);
     try {
-      await axios.delete(`http://localhost:8800/memes/${id}`);
-      window.location.reload();
+      await axios.delete(`http://localhost:8800/memes/${meme.id}`).then(() => {
+        try {
+          axios
+            .delete(`http://localhost:8000/delete/${meme.publicId}`)
+            .then(() => {
+              window.location.reload();
+            });
+        } catch (err) {
+          console.log(err);
+        }
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    memes.forEach((meme) => {
-      console.log(JSON.stringify(meme.bg));
-    });
-  }, [memes]);
-
   function Meme(props) {
+    console.log(props.meme);
     return (
       <>
         <div className="py-20 flex flex-col">
@@ -55,7 +53,7 @@ export default function Discover() {
         <div className="mx-auto flex gap-3 -mt-20 mb-20">
           <button
             className="accent-btn "
-            onClick={() => handleDelete(props.meme.id)}
+            onClick={() => handleDelete(props.meme)}
           >
             Delete
           </button>

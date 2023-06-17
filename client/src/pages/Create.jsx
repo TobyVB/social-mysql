@@ -80,6 +80,7 @@ export default function Create() {
         axios.post("http://localhost:8800/memes ", {
           ...memeObj,
           img: res.data.secure_url,
+          publicId: res.data.public_id,
         })
       )
       .then((err) => console.log(err))

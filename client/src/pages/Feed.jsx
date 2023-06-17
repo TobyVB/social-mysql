@@ -1,50 +1,59 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Feed() {
-  // On this page all of the most trending memes
-  // taken from this site.
-
-  const dummyMemes = [1, 2, 3, 4, 5];
   const [memes, setMemes] = useState([]);
 
   useEffect(() => {
-    const fetchAllBooks = async () => {
+    const fetchAllMemes = async () => {
       try {
         const res = await axios.get("http://localhost:8800/memes");
-        console.log(res);
         setMemes(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchAllBooks();
+    fetchAllMemes();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (meme) => {
+    console.log("this is publicId " + meme.publicId);
     try {
-      await axios.delete(`http://localhost:8800/memes/${id}`);
-      window.location.reload();
+      await axios.delete(`http://localhost:8800/memes/${meme.id}`).then(() => {
+        try {
+          axios
+            .delete(`http://localhost:8000/delete/${meme.publicId}`)
+            .then(() => {
+              window.location.reload();
+            });
+        } catch (err) {
+          console.log(err);
+        }
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
   function Meme(props) {
+    console.log(props.meme);
     return (
       <>
-        <div
-          className="px-20 py-10"
-          style={{ background: "coral" }}
-          // style={{ backgroundImage: `url(${props.meme.bg})` }}
-        >
-          <p className="p-10">{props.meme.topText}</p>
-          <p className="p-10">{props.meme.botText}</p>
+        <div className="py-20 flex flex-col">
+          <p className="m-0 -mb-10 text-center text-white z-50 text-xl">
+            {props.meme.topText}
+          </p>
+          <div>
+            <img className="px-20" src={props.meme.img} />
+          </div>
+          <p className="m-0 -mt-10 text-center text-white text-xl">
+            {props.meme.botText}
+          </p>
         </div>
-        <div className="mx-auto flex gap-3">
+        <div className="mx-auto flex gap-3 -mt-20 mb-20">
           <button
             className="accent-btn "
-            onClick={() => handleDelete(props.meme.id)}
+            onClick={() => handleDelete(props.meme)}
           >
             Delete
           </button>
@@ -56,13 +65,10 @@ export default function Feed() {
 
   return (
     <div className=" bg-slate-500 min-h-screen py-20">
-      {/* <section className="py-20">
-        <h1 className="text-6xl text-white text-center">Discover</h1>
-      </section> */}
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32">
           {memes.map((meme, idx) => {
-            return <Meme key={idx} meme={meme} />;
+            return <Meme key={idx} idx={idx} meme={meme} />;
           })}
         </div>
       </section>
