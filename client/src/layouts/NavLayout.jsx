@@ -67,18 +67,20 @@ export default function NavLayout() {
       >
         <Outlet />
         <section
-          className="h-20 flex justify-center flex-col"
+          className="flex justify-center flex-col py-10"
           style={{ background: "black", color: "white" }}
         >
-          <div className="flex gap-2 mx-auto">
+          <div className="flex gap-2 mx-auto mb-5">
             <NavLink to="feed">FEED</NavLink>
-            <NavLink to="discovery">DISCOVERY</NavLink>
+            <NavLink to="discover">DISCOVER</NavLink>
             <NavLink to="create">CREATE</NavLink>
             <NavLink to="about">ABOUT</NavLink>
             <NavLink to="/ ">LOGOUT</NavLink>
           </div>
 
-          <p className="mx-auto">&copy; 2023</p>
+          <p className="mx-auto">
+            <span>TalkSpace </span>&copy; 2023
+          </p>
         </section>
       </div>
       <div className="login-bg-2 w-screen h-screen">

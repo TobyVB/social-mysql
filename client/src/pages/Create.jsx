@@ -1,14 +1,31 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Resizer from "react-image-file-resizer";
 
 export default function Create() {
-  const [memeObj, setMemeObj] = useState({ bg: "", topText: "", botText: "" });
+  const [keys, setKeys] = useState();
+  const [memeObj, setMemeObj] = useState({ img: "", topText: "", botText: "" });
+  const [imgData, setImgData] = useState();
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
   const [selected, setSelected] = useState(0);
   const navigate = useNavigate();
+  const [cloudName, setCloudName] = useState();
+  const [uploadPreset, setUploadPreset] = useState();
+
+  useEffect(() => {
+    const getKeys = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/keys");
+        setCloudName(res.data.cloudName);
+        setUploadPreset(res.data.uploadPreset);
+        setKeys(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getKeys();
+  }, []);
 
   useEffect(() => {
     if (selected === 1) {
@@ -31,39 +48,50 @@ export default function Create() {
 
   const fileInputRef = useRef(null);
 
+  const [imageDataUrl, setImageDataUrl] = useState("");
+
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    const formData = new FormData();
+    const reader = new FileReader();
 
-    console.log(file);
+    reader.onloadend = () => {
+      setImageDataUrl(reader.result);
+    };
+
     if (file) {
-      Resizer.imageFileResizer(
-        file,
-        3000, // Max width
-        3000, // Max height
-        "jpeg", // Output format
-        5, // Max file size in KB
-        0, // Rotation
-        (compressedImage) => {
-          console.log("Compressed Image:", compressedImage);
-          // Perform further actions with the compressed image, such as uploading it to a server
-          setMemeObj((prev) => ({ ...prev, bg: compressedImage }));
-        },
-        "base64", // Output type
-        200 // Quality (optional)
-      );
+      reader.readAsDataURL(file);
     }
+
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+    setImgData(formData);
   };
+
+  const [ready, setReady] = useState(false);
 
   const publish = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:8800/memes ", memeObj);
-      console.log(memeObj);
-      navigate("/discover");
-    } catch (err) {
-      console.log(err);
-    }
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        imgData
+      )
+      .then((res) =>
+        axios.post("http://localhost:8800/memes ", {
+          ...memeObj,
+          img: res.data.secure_url,
+        })
+      )
+      .then((err) => console.log(err))
+      .then(() => setReady(true));
   };
+
+  useEffect(() => {
+    if (ready) {
+      navigate("/discover");
+    }
+  }, [ready]);
 
   return (
     <div className="bg-slate-500 min-h-screen py-48">
@@ -94,7 +122,11 @@ export default function Create() {
             style={{ textShadow: "1px 1px 1px black" }}
             className="create-input bg-transparent text-center text-white shadow-black"
           />
-          <img src={memeObj.bg} style={{ width: "90vw" }} className="mx-auto" />
+          <img
+            src={imageDataUrl}
+            style={{ width: "90vw" }}
+            className="mx-auto"
+          />
 
           <textarea
             placeholder="enter bottom text here"

@@ -30,8 +30,13 @@ app.get("/memes", (req, res) => {
 });
 
 app.post("/memes", (req, res) => {
-  const q = "INSERT INTO memes (`id`, `topText`, `botText`, `bg`) VALUES (?)";
-  const values = [req.body.id, req.body.topText, req.body.botText, req.body.bg];
+  const q = "INSERT INTO memes (`id`, `topText`, `botText`, `img`) VALUES (?)";
+  const values = [
+    req.body.id,
+    req.body.topText,
+    req.body.botText,
+    req.body.img,
+  ];
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);

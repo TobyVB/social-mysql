@@ -39,21 +39,16 @@ export default function Discover() {
   }, [memes]);
 
   function Meme(props) {
-    // console.log(`data:image/jpeg;base64,${props.meme.bg[0]}`);
-
     return (
       <>
-        <div
-          className="px-20 py-10"
-          style={{
-            background: "coral",
-            // backgroundImage: `url(data:image/jpeg;base64,${props.meme.bg[0]})`,
-          }}
-        >
-          <p className="p-10">{props.meme.topText}</p>
-          <p className="p-10">{props.meme.botText}</p>
+        <div className="py-20">
+          <p className="-mb-10 text-center text-white">{props.meme.topText}</p>
+          <img className="px-20" src={props.meme.img} />
+          <p className="-mt-10 text-center text-white text-4xl">
+            {props.meme.botText}
+          </p>
         </div>
-        <div className="mx-auto flex gap-3">
+        <div className="mx-auto flex gap-3 -mt-20 mb-20">
           <button
             className="accent-btn "
             onClick={() => handleDelete(props.meme.id)}
@@ -61,11 +56,6 @@ export default function Discover() {
             Delete
           </button>
           <button className="accent-btn ">Update</button>
-          {/* <img
-            src={`data:image/jpeg;base64, ${props.meme.bg[0]}`}
-            style={{ height: "50px", width: "50px" }}
-          />
-          <img src={props.meme.bg} style={{ height: "50px", width: "50px" }} /> */}
         </div>
       </>
     );
