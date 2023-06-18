@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function Discover() {
   const [memes, setMemes] = useState([]);
+  const [updateMemes, setUpdateMemes] = useState(false);
 
   useEffect(() => {
     const fetchAllMemes = async () => {
@@ -14,18 +15,15 @@ export default function Discover() {
       }
     };
     fetchAllMemes();
-  }, []);
+  }, [updateMemes]);
 
+  const [triggerReload, setTriggerReload] = useState(false);
   const handleDelete = async (meme) => {
     console.log("this is publicId " + meme.publicId);
     try {
       await axios.delete(`http://localhost:8800/memes/${meme.id}`).then(() => {
         try {
-          axios
-            .delete(`http://localhost:8000/delete/${meme.publicId}`)
-            .then(() => {
-              window.location.reload();
-            });
+          axios.delete(`http://localhost:8000/delete/${meme.publicId}`);
         } catch (err) {
           console.log(err);
         }
@@ -33,6 +31,7 @@ export default function Discover() {
     } catch (err) {
       console.log(err);
     }
+    setUpdateMemes((prev) => !prev);
   };
 
   function Meme(props) {
