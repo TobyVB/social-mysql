@@ -38,16 +38,10 @@ export default function Discover() {
     console.log(props.meme);
     return (
       <>
-        <div className="py-20 flex flex-col">
-          <p className="m-0 -mb-10 text-center text-white z-50 text-xl">
-            {props.meme.topText}
-          </p>
+        <div className="relative meme mx-auto py-20 flex flex-col">
           <div>
-            <img className="px-20" src={props.meme.img} />
+            <img src={props.meme.img} />
           </div>
-          <p className="m-0 -mt-10 text-center text-white text-xl">
-            {props.meme.botText}
-          </p>
         </div>
         <div className="mx-auto flex gap-3 -mt-20 mb-20">
           <button

@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import html2canvas from "html2canvas";
 
 export default function Create() {
   const [keys, setKeys] = useState();
-  const [memeObj, setMemeObj] = useState({ img: "", topText: "", botText: "" });
+  const [memeObj, setMemeObj] = useState({ img: "" });
   const [imgData, setImgData] = useState();
-  const textareaRef = useRef(null);
-  const textareaRef2 = useRef(null);
-  const [selected, setSelected] = useState(0);
+  const captureRef = useRef(null);
   const navigate = useNavigate();
   const [cloudName, setCloudName] = useState();
   const [uploadPreset, setUploadPreset] = useState();
@@ -27,25 +26,6 @@ export default function Create() {
     };
     getKeys();
   }, []);
-
-  useEffect(() => {
-    if (selected === 1) {
-      adjustTextareaHeight(1);
-    } else if (selected === 2) {
-      adjustTextareaHeight(2);
-    }
-  }, [memeObj]);
-
-  const adjustTextareaHeight = (num) => {
-    let textarea;
-    if (num === 1) {
-      textarea = textareaRef.current;
-    } else if (num === 2) {
-      textarea = textareaRef2.current;
-    }
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  };
 
   const fileInputRef = useRef(null);
 
@@ -93,6 +73,20 @@ export default function Create() {
     }
   }, [ready]);
 
+  const captureImage = () => {
+    html2canvas(captureRef.current)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "image.png";
+        link.click();
+      })
+      .catch((error) => {
+        console.error("An error occurred while capturing the image:", error);
+      });
+  };
+
   return (
     <div className="bg-slate-500 min-h-screen py-48">
       <section className="flex flex-col pb-5">
@@ -110,18 +104,10 @@ export default function Create() {
       </section>
 
       <section>
-        <div className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain">
-          <textarea
-            placeholder="enter top text here"
-            onClick={() => setSelected(1)}
-            ref={textareaRef}
-            value={memeObj.topText}
-            onChange={(e) =>
-              setMemeObj((prev) => ({ ...prev, topText: e.target.value }))
-            }
-            style={{ textShadow: "1px 1px 1px black" }}
-            className="create-input bg-transparent text-center text-white shadow-black -mb-10 z-50"
-          />
+        <div
+          ref={captureRef}
+          className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
+        >
           <div>
             {imageDataUrl === "" ? (
               <div
@@ -136,18 +122,6 @@ export default function Create() {
               />
             )}
           </div>
-
-          <textarea
-            placeholder="enter bottom text here"
-            onClick={() => setSelected(2)}
-            ref={textareaRef2}
-            value={memeObj.botText}
-            onChange={(e) =>
-              setMemeObj((prev) => ({ ...prev, botText: e.target.value }))
-            }
-            style={{ textShadow: "1px 1px 1px black" }}
-            className="create-input bg-transparent text-center text-white shadow-black -mt-10"
-          />
         </div>
       </section>
       <button
@@ -155,6 +129,12 @@ export default function Create() {
         className="publish block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
       >
         Publish
+      </button>
+      <button
+        className="publish block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
+        onClick={captureImage}
+      >
+        Capture Image
       </button>
     </div>
   );

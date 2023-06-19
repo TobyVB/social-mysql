@@ -136,8 +136,14 @@ body {
   .create-image {
     width: 90vw;
   }
+  .meme {
+    width: 90%;
+  }
 }
 @media (min-width: 768px) {
+  .meme {
+    width: 60%;
+  }
   .nav-tog {
     display: none;
   }
