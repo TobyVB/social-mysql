@@ -154,14 +154,14 @@ body {
   }
 }
 .active {
-  color: coral;
+  color: rgb(255, 42, 0);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
 }
 input::file-selector-button,
 .publish,
 .accent-btn {
   font-weight: bold;
-  color: coral;
+  color: rgb(255, 42, 0);
   padding: 0.5em;
   margin-top: 2em;
   border: none;

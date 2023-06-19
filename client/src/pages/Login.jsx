@@ -10,7 +10,7 @@ export default function Login() {
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center text-3x bg-slate-700">
       <div className="mx-auto text-xl2 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
         <h1 className="text-xl">The</h1>
-        <h1>TalkSpace</h1>
+        <h1>ImageSpace</h1>
       </div>
       <div className="login-bg-2 mx-auto my-3 inline-flex rounded-lg p-1">
         {!signup ? (
