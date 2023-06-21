@@ -27,8 +27,6 @@ export default function Create() {
     getKeys();
   }, []);
 
-  const fileInputRef = useRef(null);
-
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -99,7 +97,14 @@ export default function Create() {
           name="myImage"
           accept="image/png image/gif image/jpeg image/jpg image/HEIC"
           onChange={handleFileChange}
-          ref={fileInputRef}
+        />
+        <input
+          placeholder="This element probably needs more work, and it's value needs to be stored"
+          className="block mx-auto"
+          type="text"
+          name="linkImage"
+          accept="image/png image/gif image/jpeg image/jpg image/HEIC"
+          onChange={handleFileChange}
         />
       </section>
 

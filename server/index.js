@@ -1,7 +1,6 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
-import multer from "multer";
 
 const app = express();
 
@@ -12,13 +11,48 @@ const db = mysql.createConnection({
   database: "memespace",
 });
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); // automatically parse JSON objects that are sent from the frontend (for example; params)
 
-const upload = multer({ storage: multer.memoryStorage() });
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json("hello this is the backend");
+});
+
+app.post("/register", (req, res) => {
+  const q =
+    "INSERT INTO users (`id`, `email`, `username`, `password`) VALUES (?)";
+  const values = [
+    req.body.id,
+    req.body.email,
+    req.body.username,
+    req.body.password,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("User created");
+  });
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    "SELECT * FROM users WHERE email = ? AND password = ?",
+    [email, password],
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        res.send(result);
+      } else {
+        res.send({ message: "Wrong username/password combination!" });
+      }
+    }
+  );
 });
 
 app.get("/memes", (req, res) => {
