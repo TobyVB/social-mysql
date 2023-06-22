@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { LoginContext } from "../App";
 
 export default function Discover() {
   const [memes, setMemes] = useState([]);
   const [users, setUsers] = useState([]);
+  const [loggedAs, setLoggedAs] = useContext(LoginContext);
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -15,6 +17,7 @@ export default function Discover() {
       }
     };
     fetchAllUsers();
+    console.log("testing");
   }, []);
 
   useEffect(() => {
@@ -60,17 +63,26 @@ export default function Discover() {
         <div className="relative meme mx-auto py-20 flex flex-col">
           <div>
             <img src={props.meme.img} />
-            <p>{name}</p>
+            <p className="text-white text-2xl">{name}</p>
           </div>
         </div>
         <div className="mx-auto flex gap-3 -mt-20 mb-20">
-          <button
-            className="accent-btn "
-            onClick={() => handleDelete(props.meme)}
-          >
-            Delete
-          </button>
-          <button className="accent-btn ">Update</button>
+          {loggedAs.user.id === props.meme.createdBy && (
+            <button
+              className="accent-btn "
+              onClick={() => handleDelete(props.meme)}
+            >
+              Delete
+            </button>
+          )}
+          {loggedAs.user.id !== props.meme.createdBy && (
+            <button
+              className="accent-btn "
+              onClick={() => handleLike(props.meme)}
+            >
+              Like
+            </button>
+          )}
         </div>
       </>
     );
