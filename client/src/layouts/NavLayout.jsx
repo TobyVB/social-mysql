@@ -1,17 +1,44 @@
 import { GoEyeClosed, GoEye } from "react-icons/go";
-import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { LoginContext } from "../App";
+
 export default function NavLayout() {
+  const [loggedAs, setLoggedAs] = useContext(LoginContext);
+
+  // console.log(loggedAs[0].user.username);
+
+  const navigate = useNavigate();
+
   const [navOpen, setNavOpen] = useState(false);
   const [navAnim, setNavAnim] = useState("");
+  const [hideEye, setHideEye] = useState(false);
 
-  function openNav() {
+  useEffect(() => {
+    if (loggedAs.user === null) {
+      navigate("/");
+    }
+  }, []);
+
+  function openNav(arg) {
     navOpen
       ? [setNavAnim("navClose"), setNavOpen(false)]
       : [setNavAnim("navOpen"), setNavOpen(true)];
+    if (arg === "logout") {
+      localStorage.removeItem("user");
+      navigate("/login");
+    }
   }
 
   const [navTogClass, setNavTogClass] = useState("tempHide");
+
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      setHideEye(false);
+    } else {
+      setHideEye(true);
+    }
+  }, [navOpen]);
 
   return (
     <div
@@ -23,23 +50,25 @@ export default function NavLayout() {
       }}
       className=" login-bg -z-20 "
     >
-      <div
-        className={`nav-tog fixed text-white right-10 top-5 cursor-pointer z-20 `}
-        onClick={openNav}
-      >
-        {navOpen ? (
-          <GoEyeClosed className={navTogClass} size="30px" />
-        ) : (
-          <GoEye className={navTogClass} size="30px" />
-        )}
-      </div>
+      {hideEye === false && (
+        <div
+          className={`nav-tog fixed text-white right-10 top-5 cursor-pointer z-20 `}
+          onClick={openNav}
+        >
+          {navOpen ? (
+            <GoEyeClosed className={navTogClass} size="30px" />
+          ) : (
+            <GoEye className={navTogClass} size="30px" />
+          )}
+        </div>
+      )}
       <div
         className="backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
         style={{ zIndex: "2" }}
       >
         <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
-          <NavLink onClick={openNav} to="feed">
-            Feed
+          <NavLink onClick={openNav} to="liked">
+            Liked
           </NavLink>
           <NavLink onClick={openNav} to="discover">
             Discover
@@ -65,13 +94,13 @@ export default function NavLayout() {
           zIndex: "1",
         }}
       >
-        <Outlet />
+        <Outlet context={[hideEye, setHideEye]} />
         <section
           className="flex justify-center flex-col py-10"
           style={{ background: "black", color: "white" }}
         >
           <div className="flex gap-2 mx-auto mb-5">
-            <NavLink to="feed">FEED</NavLink>
+            <NavLink to="liked">LIKED</NavLink>
             <NavLink to="discover">DISCOVER</NavLink>
             <NavLink to="create">CREATE</NavLink>
             <NavLink to="about">ABOUT</NavLink>
@@ -86,8 +115,8 @@ export default function NavLayout() {
       <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
-            <NavLink to="feed" onClick={openNav}>
-              Feed
+            <NavLink to="liked" onClick={openNav}>
+              Liked
             </NavLink>
             <NavLink to="discover" onClick={openNav}>
               Discover
@@ -98,7 +127,7 @@ export default function NavLayout() {
             <NavLink to="about" onClick={openNav}>
               About
             </NavLink>
-            <NavLink to="/" onClick={openNav}>
+            <NavLink to="/" onClick={() => openNav("logout")}>
               Logout
             </NavLink>
           </div>

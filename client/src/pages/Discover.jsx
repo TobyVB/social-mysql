@@ -1,8 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 export default function Discover() {
   const [memes, setMemes] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/users");
+        setUsers(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllUsers();
+  }, []);
 
   useEffect(() => {
     const fetchAllMemes = async () => {
@@ -36,11 +49,18 @@ export default function Discover() {
 
   function Meme(props) {
     console.log(props.meme);
+    let name;
+    users.map((user) => {
+      if (props.meme.createdBy === user.id) {
+        return (name = user.username);
+      }
+    });
     return (
       <>
         <div className="relative meme mx-auto py-20 flex flex-col">
           <div>
             <img src={props.meme.img} />
+            <p>{name}</p>
           </div>
         </div>
         <div className="mx-auto flex gap-3 -mt-20 mb-20">

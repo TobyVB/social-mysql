@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
-export default function Feed() {
+// L I K E D   W I L L   J U S T   B E   T H E   M E M E S   T H E
+// U S E R   L I K E S
+
+export function Liked() {
   const [memes, setMemes] = useState([]);
 
   useEffect(() => {

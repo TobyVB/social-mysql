@@ -1,17 +1,18 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import html2canvas from "html2canvas";
+import { LoginContext } from "../App";
 
 export default function Create() {
   const [keys, setKeys] = useState();
   const [memeObj, setMemeObj] = useState({ img: "" });
   const [imgData, setImgData] = useState();
-  const captureRef = useRef(null);
   const navigate = useNavigate();
   const [cloudName, setCloudName] = useState();
   const [uploadPreset, setUploadPreset] = useState();
   const [imageDataUrl, setImageDataUrl] = useState("");
+
+  const [loggedAs, setLoggedAs] = useContext(LoginContext);
 
   useEffect(() => {
     const getKeys = async () => {
@@ -59,6 +60,7 @@ export default function Create() {
           ...memeObj,
           img: res.data.secure_url,
           publicId: res.data.public_id,
+          createdBy: loggedAs.user.id,
         })
       )
       .then((err) => console.log(err))
@@ -70,20 +72,6 @@ export default function Create() {
       navigate("/discover");
     }
   }, [ready]);
-
-  const captureImage = () => {
-    html2canvas(captureRef.current)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = imgData;
-        link.download = "image.png";
-        link.click();
-      })
-      .catch((error) => {
-        console.error("An error occurred while capturing the image:", error);
-      });
-  };
 
   return (
     <div className="bg-slate-500 min-h-screen py-48">
@@ -109,10 +97,7 @@ export default function Create() {
       </section>
 
       <section>
-        <div
-          ref={captureRef}
-          className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain"
-        >
+        <div className="create-image  m-auto text-black-50 flex flex-col justify-between text-center bg-contain">
           <div>
             {imageDataUrl === "" ? (
               <div
@@ -134,12 +119,6 @@ export default function Create() {
         className="publish block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
       >
         Publish
-      </button>
-      <button
-        className="publish block border-neutral-800 border-2 rounded p-1 mx-auto mt-5"
-        onClick={captureImage}
-      >
-        Capture Image
       </button>
     </div>
   );

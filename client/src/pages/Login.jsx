@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useOutlet, useOutletContext } from "react-router-dom";
 import axios from "axios";
+import { nanoid } from "nanoid";
 
 export default function Login() {
+  const [hideEye, setHideEye] = useOutletContext();
+
   const [signup, setSignup] = useState(false);
 
   const navigate = useNavigate();
@@ -22,9 +25,11 @@ export default function Login() {
         email: emailReg,
         username: usernameReg,
         password: passwordReg,
+        id: nanoid(),
       })
       .then((response) => {
         console.log(response);
+        navigate("/discover");
       });
   };
 
@@ -41,6 +46,7 @@ export default function Login() {
           setLoginStatus(response.data[0].username);
           localStorage.setItem("user", JSON.stringify(response.data[0]));
           navigate("/discover");
+          setHideEye(false);
         }
       });
   };
@@ -58,11 +64,13 @@ export default function Login() {
               Login
             </h1>
             <input
+              placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               className="p-2"
               type="email"
             />
             <input
+              placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               className="p-2"
               type="password"

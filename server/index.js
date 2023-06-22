@@ -55,6 +55,14 @@ app.post("/login", (req, res) => {
   );
 });
 
+app.get("/users", (req, res) => {
+  const q = "SELECT * FROM memespace.users";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
 app.get("/memes", (req, res) => {
   const q = "SELECT * FROM memespace.memes";
   db.query(q, (err, data) => {
@@ -64,8 +72,14 @@ app.get("/memes", (req, res) => {
 });
 
 app.post("/memes", (req, res) => {
-  const q = "INSERT INTO memes (`id`, `img`, `publicId`) VALUES (?)";
-  const values = [req.body.id, req.body.img, req.body.publicId];
+  const q =
+    "INSERT INTO memes (`id`, `img`, `publicId`, `createdBy`) VALUES (?)";
+  const values = [
+    req.body.id,
+    req.body.img,
+    req.body.publicId,
+    req.body.createdBy,
+  ];
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
