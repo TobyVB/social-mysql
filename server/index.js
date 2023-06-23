@@ -71,6 +71,17 @@ app.get("/memes", (req, res) => {
   });
 });
 
+app.post("/likes", (req, res) => {
+  const q = "INSERT INTO user_likes (`id`, `public_id`, `user_id`) VALUES (?)";
+  const values = [req.body.id, req.body.publicId, req.body.likedBy];
+
+  db.query(q, [values], (err, data) => {
+    console.log("is error?");
+    if (err) return res.json(err);
+    return res.json("Image has been liked");
+  });
+});
+
 app.post("/memes", (req, res) => {
   const q =
     "INSERT INTO memes (`id`, `img`, `publicId`, `createdBy`) VALUES (?)";

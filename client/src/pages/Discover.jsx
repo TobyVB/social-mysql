@@ -6,6 +6,7 @@ export default function Discover() {
   const [memes, setMemes] = useState([]);
   const [users, setUsers] = useState([]);
   const [loggedAs, setLoggedAs] = useContext(LoginContext);
+  const [likedData, setLikedData] = useState({});
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -49,6 +50,22 @@ export default function Discover() {
       return prev.filter((item) => item.id !== meme.id);
     });
   };
+
+  async function handleLike(meme) {
+    console.log("HEY");
+    console.log(meme.publicId);
+    console.log(loggedAs.user.id);
+
+    // let data = {
+    //   publicId: meme.publicId,
+    //   likedBy: loggedAs.user.id,
+    // };
+    axios.post("http://localhost:8800/likes ", {
+      ...likedData,
+      publicId: meme.publicId,
+      likedBy: loggedAs.user.id,
+    });
+  }
 
   function Meme(props) {
     console.log(props.meme);
