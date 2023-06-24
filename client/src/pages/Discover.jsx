@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../App";
 
@@ -7,6 +8,27 @@ export default function Discover() {
   const [users, setUsers] = useState([]);
   const [loggedAs, setLoggedAs] = useContext(LoginContext);
   const [likedData, setLikedData] = useState({});
+  const [likes, setLikes] = useState();
+  const [likeIds, setLikeIds] = useState();
+  const [update, setUpdate] = useState(false);
+  const navigate = useNavigate();
+
+  console.log(loggedAs);
+
+  useEffect(() => {
+    const fetchAllLikes = async () => {
+      const res = await axios.get("http://localhost:8800/likes");
+      const allLikes = res.data;
+      // only show like rows that have loggedAs.user.id as the user_id
+      const filteredLikeObj = allLikes.filter(
+        (obj) => obj.user_id === loggedAs.user.id
+      );
+      const likedImages = filteredLikeObj.map((obj) => obj.public_id);
+      setLikeIds(likedImages);
+      setLikes(filteredLikeObj);
+    };
+    fetchAllLikes();
+  }, [update]);
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -52,18 +74,26 @@ export default function Discover() {
   };
 
   async function handleLike(meme) {
-    console.log("HEY");
-    console.log(meme.publicId);
-    console.log(loggedAs.user.id);
+    axios
+      .post("http://localhost:8800/likes ", {
+        ...likedData,
+        publicId: meme.publicId,
+        likedBy: loggedAs.user.id,
+      })
+      .then(() => {
+        setUpdate((prev) => !prev);
+      });
+  }
 
-    // let data = {
-    //   publicId: meme.publicId,
-    //   likedBy: loggedAs.user.id,
-    // };
-    axios.post("http://localhost:8800/likes ", {
-      ...likedData,
-      publicId: meme.publicId,
-      likedBy: loggedAs.user.id,
+  async function handleUnLike(meme) {
+    const likeId = likes.map((like) => {
+      if (like.public_id === meme.publicId) {
+        console.log(like.id);
+        return like.id;
+      }
+    });
+    await axios.delete(`http://localhost:8800/likes/${likeId}`).then(() => {
+      setUpdate((prev) => !prev);
     });
   }
 
@@ -92,13 +122,23 @@ export default function Discover() {
               Delete
             </button>
           )}
-          {loggedAs.user.id !== props.meme.createdBy && (
+          {loggedAs.user.id !== props.meme.createdBy &&
+          !likeIds.includes(props.meme.publicId) ? (
             <button
               className="accent-btn "
               onClick={() => handleLike(props.meme)}
             >
               Like
             </button>
+          ) : (
+            loggedAs.user.id !== props.meme.createdBy && (
+              <button
+                className="accent-btn "
+                onClick={() => handleUnLike(props.meme)}
+              >
+                unLike
+              </button>
+            )
           )}
         </div>
       </>

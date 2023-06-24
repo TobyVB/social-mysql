@@ -71,6 +71,14 @@ app.get("/memes", (req, res) => {
   });
 });
 
+app.get("/likes", (req, res) => {
+  const q = "SELECT * FROM memespace.user_likes";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
 app.post("/likes", (req, res) => {
   const q = "INSERT INTO user_likes (`id`, `public_id`, `user_id`) VALUES (?)";
   const values = [req.body.id, req.body.publicId, req.body.likedBy];
@@ -79,6 +87,16 @@ app.post("/likes", (req, res) => {
     console.log("is error?");
     if (err) return res.json(err);
     return res.json("Image has been liked");
+  });
+});
+
+app.delete("/likes/:likeId", (req, res) => {
+  const likeId = req.params.likeId;
+  const q = "DELETE FROM user_likes WHERE id = ?";
+
+  db.query(q, [likeId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Meme has been deleted");
   });
 });
 
