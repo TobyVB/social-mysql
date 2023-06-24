@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { LoginContext } from "../App";
 
-export default function Discover() {
+export default function Uploaded() {
   const [memes, setMemes] = useState([]);
   const [users, setUsers] = useState([]);
   const [loggedAs, setLoggedAs] = useContext(LoginContext);
@@ -163,7 +163,11 @@ export default function Discover() {
       <section className="flex justify-center">
         <div className="inline-flex flex-col gap-5 my-32 ">
           {memes.map((meme, idx) => {
-            return <Meme key={idx} idx={idx} meme={meme} />;
+            return (
+              meme.createdBy === loggedAs.user.id && (
+                <Meme key={idx} idx={idx} meme={meme} />
+              )
+            );
           })}
         </div>
       </section>

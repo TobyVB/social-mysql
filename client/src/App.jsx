@@ -5,9 +5,10 @@ import NavLayout from "./layouts/NavLayout";
 
 import "./App.css";
 import Discover from "./pages/Discover";
-import { Liked } from "./pages/Liked";
+import Liked from "./pages/Liked";
 import About from "./pages/About";
 import Create from "./pages/Create";
+import Uploaded from "./pages/Uploaded";
 
 export const LoginContext = createContext();
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route to="/" element={<NavLayout />}>
             <Route index element={<Login />} />
+            <Route path="uploaded" element={<Uploaded />} />
             <Route path="liked" element={<Liked />} />
             <Route path="discover" element={<Discover />} />
             <Route path="about" element={<About />} />

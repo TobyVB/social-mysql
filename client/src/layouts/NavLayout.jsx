@@ -62,29 +62,35 @@ export default function NavLayout() {
           )}
         </div>
       )}
-      <div
-        className="backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
-        style={{ zIndex: "2" }}
-      >
-        <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
-          <NavLink onClick={openNav} to="liked">
-            Liked
-          </NavLink>
-          <NavLink onClick={openNav} to="discover">
-            Discover
-          </NavLink>
+      {hideEye === false && (
+        <div
+          className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
+          style={{ zIndex: "2" }}
+        >
+          <p className="text-white text-2xl ">hello {loggedAs.user.username}</p>
+          <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
+            <NavLink onClick={openNav} to="uploaded">
+              Uploaded
+            </NavLink>
+            <NavLink onClick={openNav} to="liked">
+              Liked
+            </NavLink>
+            <NavLink onClick={openNav} to="discover">
+              Discover
+            </NavLink>
 
-          <NavLink onClick={openNav} to="create">
-            Create
-          </NavLink>
-          <NavLink onClick={openNav} to="about">
-            About
-          </NavLink>
-          <NavLink onClick={openNav} to="/">
-            Logout
-          </NavLink>
+            <NavLink onClick={openNav} to="create">
+              Create
+            </NavLink>
+            <NavLink onClick={openNav} to="about">
+              About
+            </NavLink>
+            <NavLink onClick={() => openNav("logout")} to="/">
+              Logout
+            </NavLink>
+          </div>
         </div>
-      </div>
+      )}
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
         style={{
@@ -100,6 +106,7 @@ export default function NavLayout() {
           style={{ background: "black", color: "white" }}
         >
           <div className="flex gap-2 mx-auto mb-5">
+            <NavLink to="uploaded">UPLOADED</NavLink>
             <NavLink to="liked">LIKED</NavLink>
             <NavLink to="discover">DISCOVER</NavLink>
             <NavLink to="create">CREATE</NavLink>
@@ -114,7 +121,13 @@ export default function NavLayout() {
       </div>
       <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
+          <p className="text-white text-2xl mt-5">
+            hello {loggedAs.user.username}
+          </p>
           <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
+            <NavLink onClick={openNav} to="uploaded">
+              Uploaded
+            </NavLink>
             <NavLink to="liked" onClick={openNav}>
               Liked
             </NavLink>

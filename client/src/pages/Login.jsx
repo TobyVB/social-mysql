@@ -2,21 +2,19 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useOutlet, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { LoginContext } from "../App";
 
 export default function Login() {
+  const [loggedAs, setLoggedAs] = useContext(LoginContext);
   const [hideEye, setHideEye] = useOutletContext();
-
   const [signup, setSignup] = useState(false);
-
   const navigate = useNavigate();
-
   const [emailReg, setEmailReg] = useState("");
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [loginStatus, setLoginStatus] = useState("");
 
   const register = async () => {
@@ -29,6 +27,7 @@ export default function Login() {
       })
       .then((response) => {
         console.log(response);
+
         navigate("/discover");
       });
   };
@@ -45,6 +44,9 @@ export default function Login() {
         } else {
           setLoginStatus(response.data[0].username);
           localStorage.setItem("user", JSON.stringify(response.data[0]));
+          setLoggedAs((prev) => {
+            return { ...prev, user: response.data[0] };
+          });
           navigate("/discover");
           setHideEye(false);
         }

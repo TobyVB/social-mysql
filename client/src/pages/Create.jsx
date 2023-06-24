@@ -46,6 +46,8 @@ export default function Create() {
     setImgData(formData);
   };
 
+  const handleUrl = (e) => {};
+
   const [ready, setReady] = useState(false);
 
   const publish = async (e) => {
@@ -76,7 +78,7 @@ export default function Create() {
   return (
     <div className="bg-slate-500 min-h-screen py-48">
       <section className="flex flex-col pb-5">
-        <label className="block mx-auto text-2xl text-white">
+        <label className="block mx-auto text-2xl text-white mb-10">
           Your Image File
         </label>
         <input
@@ -92,7 +94,7 @@ export default function Create() {
           type="text"
           name="linkImage"
           accept="image/png image/gif image/jpeg image/jpg image/HEIC"
-          onChange={handleFileChange}
+          onChange={handleUrl}
         />
       </section>
 
