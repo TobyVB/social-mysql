@@ -55,7 +55,7 @@ export default function NavLayout() {
       }}
       className=" login-bg -z-20 "
     >
-      {hideEye === false && (
+      {(hideEye === false || loggedAs.user === "guest") && (
         <div
           className={`nav-tog fixed text-white right-10 top-5 cursor-pointer z-20 `}
           onClick={openNav}
@@ -136,7 +136,10 @@ export default function NavLayout() {
       <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <p className="text-white text-2xl mt-5">
-            hello {loggedAs.user && loggedAs.user.username}
+            hello{" "}
+            {loggedAs.user && loggedAs.user === "guest"
+              ? "guest"
+              : loggedAs.user && loggedAs.user.username}
           </p>
           <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
             <NavLink onClick={openNav} to="uploaded">
