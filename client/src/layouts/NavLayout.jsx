@@ -26,6 +26,10 @@ export default function NavLayout() {
       : [setNavAnim("navOpen"), setNavOpen(true)];
     if (arg === "logout") {
       localStorage.removeItem("user");
+      setLoggedAs({
+        user: JSON.parse(localStorage.getItem("user")),
+        authenticated: JSON.parse(localStorage.getItem("user")) !== null,
+      });
       navigate("/login");
     }
   }
@@ -62,35 +66,41 @@ export default function NavLayout() {
           )}
         </div>
       )}
-      {hideEye === false && (
-        <div
-          className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
-          style={{ zIndex: "2" }}
-        >
-          <p className="text-white text-2xl ">hello {loggedAs.user.username}</p>
-          <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
-            <NavLink onClick={openNav} to="uploaded">
-              Uploaded
-            </NavLink>
-            <NavLink onClick={openNav} to="liked">
-              Liked
-            </NavLink>
-            <NavLink onClick={openNav} to="discover">
-              Discover
-            </NavLink>
+      {hideEye === false ||
+        (loggedAs.user === "guest" && (
+          <div
+            className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
+            style={{ zIndex: "2" }}
+          >
+            <p className="text-white text-2xl ">
+              hello{" "}
+              {loggedAs.user && loggedAs.user === "guest"
+                ? "guest"
+                : loggedAs.user.username}
+            </p>
+            <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
+              <NavLink onClick={openNav} to="uploaded">
+                Uploaded
+              </NavLink>
+              <NavLink onClick={openNav} to="liked">
+                Liked
+              </NavLink>
+              <NavLink onClick={openNav} to="discover">
+                Discover
+              </NavLink>
 
-            <NavLink onClick={openNav} to="create">
-              Create
-            </NavLink>
-            <NavLink onClick={openNav} to="about">
-              About
-            </NavLink>
-            <NavLink onClick={() => openNav("logout")} to="/">
-              Logout
-            </NavLink>
+              <NavLink onClick={openNav} to="create">
+                Create
+              </NavLink>
+              <NavLink onClick={openNav} to="about">
+                About
+              </NavLink>
+              <NavLink onClick={() => openNav("logout")} to="/">
+                Logout
+              </NavLink>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
         style={{
@@ -122,7 +132,7 @@ export default function NavLayout() {
       <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <p className="text-white text-2xl mt-5">
-            hello {loggedAs.user.username}
+            hello {loggedAs.user && loggedAs.user.username}
           </p>
           <div className="text-white font-extrabold text-2xl flex flex-col gap-4 pt-48">
             <NavLink onClick={openNav} to="uploaded">

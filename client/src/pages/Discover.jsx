@@ -109,11 +109,12 @@ export default function Discover() {
       }
     });
     let likeCount = 0;
-    allLikes.map((like) => {
-      if (props.meme.publicId === like.public_id) {
-        likeCount++;
-      }
-    });
+    allLikes &&
+      allLikes.map((like) => {
+        if (props.meme.publicId === like.public_id) {
+          likeCount++;
+        }
+      });
     return (
       <>
         <div className="relative meme mx-auto pt-20">

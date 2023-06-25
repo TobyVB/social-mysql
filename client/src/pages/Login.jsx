@@ -8,14 +8,13 @@ export default function Login() {
   const [loggedAs, setLoggedAs] = useContext(LoginContext);
   const [hideEye, setHideEye] = useOutletContext();
   const [signup, setSignup] = useState(false);
-  const navigate = useNavigate();
   const [emailReg, setEmailReg] = useState("");
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
+  const navigate = useNavigate();
 
   const register = async () => {
     axios
@@ -53,6 +52,11 @@ export default function Login() {
       });
   };
 
+  const guestSignin = async () => {
+    setLoggedAs({ user: "guest", authenticated: false });
+    navigate("/discover");
+  };
+
   return (
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center text-3x bg-slate-700">
       <div className="mx-auto text-xl2 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
@@ -79,12 +83,14 @@ export default function Login() {
             />
             <button
               className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100"
-              // onClick={() => navigate("homepage")}
               onClick={() => signIn()}
             >
               login
             </button>
-            <button className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100 text">
+            <button
+              className="text-white bg-opacity-10 bg-white p-2 border border-zinc-100 text"
+              onClick={guestSignin}
+            >
               continue as guest
             </button>
             <button
@@ -119,7 +125,6 @@ export default function Login() {
             />
             <button
               className="text-white bg-opacity-30 bg-white p-2 border border-zinc-100"
-              // onClick={() => navigate("homepage")}
               onClick={() => register()}
             >
               register
