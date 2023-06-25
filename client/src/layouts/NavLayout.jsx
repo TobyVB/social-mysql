@@ -115,13 +115,17 @@ export default function NavLayout() {
           className="flex justify-center flex-col py-10"
           style={{ background: "black", color: "white" }}
         >
-          <div className="flex gap-2 mx-auto mb-5">
-            <NavLink to="uploaded">UPLOADED</NavLink>
-            <NavLink to="liked">LIKED</NavLink>
-            <NavLink to="discover">DISCOVER</NavLink>
-            <NavLink to="create">CREATE</NavLink>
-            <NavLink to="about">ABOUT</NavLink>
-            <NavLink to="/ ">LOGOUT</NavLink>
+          <div className="footer-links flex gap-2 mx-auto mb-5">
+            <div className="footer-halves flex gap-2">
+              <NavLink to="uploaded">UPLOADED</NavLink>
+              <NavLink to="liked">LIKED</NavLink>
+              <NavLink to="discover">DISCOVER</NavLink>
+            </div>
+            <div className="footer-halves flex gap-2">
+              <NavLink to="create">CREATE</NavLink>
+              <NavLink to="about">ABOUT</NavLink>
+              <NavLink to="/ ">LOGOUT</NavLink>
+            </div>
           </div>
 
           <p className="mx-auto">
