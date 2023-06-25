@@ -12,7 +12,7 @@ export default function NavLayout() {
 
   const [navOpen, setNavOpen] = useState(false);
   const [navAnim, setNavAnim] = useState("");
-  const [hideEye, setHideEye] = useState(false);
+  const [hideEye, setHideEye] = useState(true);
 
   useEffect(() => {
     if (loggedAs.user === null) {
@@ -27,9 +27,10 @@ export default function NavLayout() {
     if (arg === "logout") {
       localStorage.removeItem("user");
       setLoggedAs({
-        user: JSON.parse(localStorage.getItem("user")),
-        authenticated: JSON.parse(localStorage.getItem("user")) !== null,
+        // user: JSON.parse(localStorage.getItem("user")),
+        // authenticated: JSON.parse(localStorage.getItem("user")) !== null,
       });
+      setHideEye(true);
       navigate("/login");
     }
   }
@@ -39,8 +40,8 @@ export default function NavLayout() {
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
       setHideEye(false);
-    } else {
-      setHideEye(true);
+    } else if (loggedAs.user === "guest") {
+      setHideEye(false);
     }
   }, [navOpen]);
 
@@ -66,41 +67,40 @@ export default function NavLayout() {
           )}
         </div>
       )}
-      {hideEye === false ||
-        (loggedAs.user === "guest" && (
-          <div
-            className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
-            style={{ zIndex: "2" }}
-          >
-            <p className="text-white text-2xl ">
-              hello{" "}
-              {loggedAs.user && loggedAs.user === "guest"
-                ? "guest"
-                : loggedAs.user.username}
-            </p>
-            <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
-              <NavLink onClick={openNav} to="uploaded">
-                Uploaded
-              </NavLink>
-              <NavLink onClick={openNav} to="liked">
-                Liked
-              </NavLink>
-              <NavLink onClick={openNav} to="discover">
-                Discover
-              </NavLink>
+      {(hideEye === false || loggedAs.user === "guest") && (
+        <div
+          className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
+          style={{ zIndex: "2" }}
+        >
+          <p className="text-white text-2xl ">
+            hello{" "}
+            {loggedAs.user && loggedAs.user === "guest"
+              ? "guest"
+              : loggedAs.user && loggedAs.user.username}
+          </p>
+          <div className="text-white font-light  text-3xl  flex gap-10 float-right mr-10">
+            <NavLink onClick={openNav} to="uploaded">
+              Uploaded
+            </NavLink>
+            <NavLink onClick={openNav} to="liked">
+              Liked
+            </NavLink>
+            <NavLink onClick={openNav} to="discover">
+              Discover
+            </NavLink>
 
-              <NavLink onClick={openNav} to="create">
-                Create
-              </NavLink>
-              <NavLink onClick={openNav} to="about">
-                About
-              </NavLink>
-              <NavLink onClick={() => openNav("logout")} to="/">
-                Logout
-              </NavLink>
-            </div>
+            <NavLink onClick={openNav} to="create">
+              Create
+            </NavLink>
+            <NavLink onClick={openNav} to="about">
+              About
+            </NavLink>
+            <NavLink onClick={() => openNav("logout")} to="/">
+              Logout
+            </NavLink>
           </div>
-        ))}
+        </div>
+      )}
       <div
         className={`${navAnim}  overflow-x-hidden outlet-container`}
         style={{
