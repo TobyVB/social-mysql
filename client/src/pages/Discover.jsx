@@ -120,7 +120,7 @@ export default function Discover() {
         <div className="relative meme mx-auto pt-20">
           <div className="flex justify-between">
             <p className="text-white text-l mb-2">posted by: {name}</p>
-            <p className="text-white">likes: {likeCount}</p>
+            <p className="text-white">👍 {likeCount}</p>
           </div>
           <img src={props.meme.img} />
           <div className="flex">

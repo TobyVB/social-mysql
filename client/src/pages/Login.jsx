@@ -3,6 +3,7 @@ import { useNavigate, useOutlet, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { LoginContext } from "../App";
+import { GoThumbsup } from "react-icons/go";
 
 export default function Login() {
   const [loggedAs, setLoggedAs] = useContext(LoginContext);
@@ -59,9 +60,9 @@ export default function Login() {
 
   return (
     <div className="login-main overflow-hidden min-h-screen flex flex-col content-center bg-slate-700">
-      <div className="mx-auto text-xl2 bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
+      <div className="mx-auto bg-clip-text text-transparent  font-extrabold text-transparent text-5xl  login-text my-28">
         <h1 className="text-xl">The</h1>
-        <h1>ImageSpace</h1>
+        <h1 className="pb-3">ImageSpace</h1>
       </div>
       <div className="login-bg-2 mx-auto mb-32 inline-flex rounded-lg">
         {!signup ? (
