@@ -72,7 +72,7 @@ export default function NavLayout() {
           className="flex justify-between backdrop-blur-sm wide-nav text-center fixed w-screen p-3 bg-opacity-50 bg-black"
           style={{ zIndex: "2" }}
         >
-          <p className="text-white text-2xl ">
+          <p className="text-white text-3xl text-4xl ">
             hello{" "}
             {loggedAs.user && loggedAs.user === "guest"
               ? "guest"
