@@ -136,7 +136,7 @@ export default function NavLayout() {
       <div className="login-bg-2 w-screen h-screen">
         <div className="text-center fixed w-screen h-screen">
           <p className="text-white text-2xl mt-5">
-            hello{" "}
+            Welcome back,{" "}
             {loggedAs.user && loggedAs.user === "guest"
               ? "guest"
               : loggedAs.user && loggedAs.user.username}
